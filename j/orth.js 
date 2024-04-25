@@ -1,0 +1,102 @@
+
+      // load the example texture
+      const texture = new THREE.TextureLoader().load('./images/kandinsky-download-1696480747845.png')
+     // const texture2 = new THREE.TextureLoader().load('./images/kandinsky-download-1694765371549.png')
+      // create a bunch of meshes
+      const elements = new THREE.Group()
+      const NUM_ELEMENTS = 130
+      for (let i = 0; i < NUM_ELEMENTS; i++) {
+        const geometry = new THREE.BoxGeometry(random(0.1, 0.5), random(0.1, 0.5), random(0.1, 0.5))
+        // create a different material for different objects
+        // since each one will have a different position
+        const material = new ProjectedMaterial({
+          // use the orthographic camera
+          camera: webgl.camera,
+        //  camera2: webgl.camera2,
+          texture,
+        //  texture2,
+          color: '#1c1c1c',
+          textureScale: 0.8,
+        })
+        const element = new THREE.Mesh(geometry, material)
+
+        // move the meshes any way you want!
+        element.position.x = random(-1, 1)
+        element.position.y = random(-1, 1)
+        element.position.z = random(-1, 1)
+
+        // and when you're ready project the texture!
+        material.project(element)
+
+        elements.add(element)
+      }
+
+      webgl.scene.add(elements)
+
+      // move the camera so it's not facing the
+      // texture straight on at the start
+      webgl.camera.position.set(-10, 5, 10)
+      webgl.camera.lookAt(0, 0, 0)
+
+      // add lights
+      const directionalLight = new THREE.DirectionalLight('#ffffff', 0.6)
+      directionalLight.position.set(0, 10, 10)
+      webgl.scene.add(directionalLight)
+
+
+      const material2 = new ProjectedMaterial({
+        // use the orthographic camera
+        camera2: webgl.camera,
+      //  camera2: webgl.camera2,
+        texture,
+      //  texture2,
+        color2: '#1c1c1c',
+        textureScale: 0.8,
+      })
+
+
+      // create a bunch of meshes
+      //const elements = new THREE.Group()
+      //const NUM_ELEMENTS = 130
+      //for (let i = 0; i < NUM_ELEMENTS; i++) {
+       // const geometry = new THREE.BoxGeometry(random(0.1, 0.5), random(0.1, 0.5), random(0.1, 0.5))
+        // create a different material for different objects
+        // since each one will have a different position
+       // const material2 = new ProjectedMaterial({
+          // use the orthographic camera
+       //   camera2: webgl.camera,
+       //   texture2,
+       //   color2: '#000000',
+       //   textureScale: 0.8,
+       // })
+        //const element2 = new THREE.Mesh(geometry2, material)
+
+        // move the meshes any way you want!
+       // element.position.x = random(-1, 1)
+       // element.position.y = random(-1, 1)
+        //element.position.z = random(-1, 1)
+     // move the camera so it's not facing the
+      // texture straight on at the start
+      webgl.camera.position.set(-90, 5, 10)
+      webgl.camera.lookAt(-90, 0, 0)
+        // and when you're ready project the texture!
+        material2.project(element)
+
+        elements.add(element)
+
+
+      webgl.scene.add(elements)
+
+
+
+      // add lights
+      const directionalLight2 = new THREE.DirectionalLight('#ffffff', 0.6)
+      directionalLight.position.set(8, 90, 10)
+      webgl.scene.add(directionalLight2)
+
+      const ambientLight = new THREE.AmbientLight('#ffffff', 0.6)
+      webgl.scene.add(ambientLight)
+
+      // start animation loop
+      webgl.start()
+   
