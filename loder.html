@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>webgpu</title>
+<style id="jsbin-css">
+body{
+  overflow: hidden;
+  margin: 0;
+  background-color: black;
+}
+</style>
+</head>
+  
+<body>
+    <script type="importmap">
+            {
+              "imports": {
+                "three": "https://unpkg.com/three@0.163.0/build/three.module.js", 
+                "three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm/",
+                "three/nodes": "https://unpkg.com/three@0.163.0/examples/jsm/nodes/Nodes.js"
+             }
+            }
+          </script>
+
+		<script type="module">
+
+import * as THREE from 'three';
+		
+			import WebGL from 'three/addons/capabilities/WebGL.js';
+		
+            import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+			import Stats from 'three/addons/libs/stats.module.js';
+
+	
+
+			let camera, scene, renderer;
+			let controls, stats;
+		
+
+			init();
+
+			function init() {
+
+			
+				const { innerWidth, innerHeight } = window;
+
+				camera = new THREE.PerspectiveCamera( 60, innerWidth / innerHeight, .1, 110 );
+				camera.position.set( 30, 8, 0 );
+				camera.lookAt( 0, 0, 0 );
+
+				scene = new THREE.Scene();
+                scene.fog = new THREE.FogExp2(0x11111f, 0.01);
+				const dirLight = new THREE.DirectionalLight( 0xffffff, 7.5 );
+				dirLight.castShadow = true;
+				dirLight.position.set( 1, 2, 2 );
+				dirLight.castShadow = true;
+				dirLight.shadow.camera.near = 1;
+				dirLight.shadow.camera.far = 50;
+				dirLight.shadow.camera.right = 25;
+				dirLight.shadow.camera.left = - 25;
+				dirLight.shadow.camera.top = 25;
+				dirLight.shadow.camera.bottom = - 25;
+				dirLight.shadow.mapSize.width = 2048;
+				dirLight.shadow.mapSize.height = 2048;
+				dirLight.shadow.bias = - 0.01;
+
+				scene.add( dirLight );
+				scene.add( new THREE.AmbientLight( 0x111111 ) );
+
+				//
+
+			
+
+				//
+                new GLTFLoader().load("https://haawkeneuraltech.com/images/sf_models/8499096734_05d39e6f23_k_depth_512.glb", function(gltf) {
+		
+		  
+        gltf.scene.traverse( function( node ) {
+           if ( node instanceof THREE.Mesh ) {             node.castShadow = true; 
+             node.material.side = THREE.DoubleSide;
+           
+      
+        
+   
+			 let	model = gltf.scene;
+       model.scale.set(.091,.091,.091);
+     model.position.set(10,4.8,6);
+	 model.rotation.set(33,0,80);
+	 model.receiveShadow = true;
+		//model.rotation.y = Math.PI / 2;
+					model.layers.enable( 1 ); 
+       scene.add(model);
+   }
+  
+})
+				controls = new OrbitControls( camera, renderer.domElement );
+				controls.minDistance = 5;
+				controls.maxDistance = 50;
+				controls.update();
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize );
+
+		
+
+			function onWindowResize() {
+
+				const { innerWidth, innerHeight } = window;
+
+				camera.aspect = innerWidth / innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( innerWidth, innerHeight );
+
+			}
+
+			function animate() {
+
+				stats.update();
+
+				const delta = clock.getDelta();
+
+				if ( monkey ) {
+
+					monkey.rotation.y += delta;
+
+				}
+
+				
+				
+
+			
+				renderer.render( scene, camera );
+			}
+			})
+
+        };
+	
+		</script>
+	</body>
+</html>

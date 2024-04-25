@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>logo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&amp;display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  
+
+  <style>
+    body,html {
+    
+      width:100%;
+      height:100vh;
+    }
+#overlay {
+  width:100%;
+  position: absolute;
+  margin:0;
+  height:100vh;
+  z-index:2;
+}
+#card_sd {
+
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+  margin-top:27%;
+  margin-bottom: 2%;
+  margin-left: 2%;
+  position: absolute;
+  padding:5px;
+ color:white;
+  height:40%;
+  z-index:2;
+}
+.btn, .badge-warning {
+  background-color: rgb(55, 103, 248);
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: white;
+  padding:5px;
+  color:white;
+ 
+  margin-left: 29%;
+  width:7vw;
+  height:22%;
+}
+.rounded box, .shadow-xl {
+ border-radius: 8px;
+opacity:1;
+
+}
+#card_sd {
+  height:50%;
+  
+  background-color: rgb(255 255 255 / 7%);
+  backdrop-filter: blur(10px);
+backdrop-filter: opacity(50%);
+}
+.cover {
+  border-radius: 2px;
+  border-width: 3px;
+  border-color: aliceblue;
+
+}
+  </style> 
+
+</head>
+<body>
+  <img id="overlay" src="bg2_clear.png" />
+ <div id="card_sd" class="card card-compact outline w-60  bg-base-300 shadow-xl ">
+    <figure>
+      <img class="cover" src="./cover_1400.png" width="200" height="200" alt="cover"> 
+    </figure>
+    <div class="card-body">
+      <h2 class="card-title text-bold text-xl text-light">New release available</h2>
+   
+        <div class="card-actions justify-end">
+            <a href="https://inoculate.media"> <button class="btn btn-sm btn-info text-light  subpixel-antialiased">Buy Now</button></a>
+        </div>
+            </div>
+        </div>
+</div>
+</body>
+  
+</html>

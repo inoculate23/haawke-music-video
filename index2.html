@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Same camera example - three-projected-material</title>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.163.0/build/three.module.js", 
+            "three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm/",
+            "three/nodes": "https://unpkg.com/three@0.163.0/examples/jsm/nodes/Nodes.js"
+         }
+        }
+      </script>
+
+    <link rel="modulepreload" crossorigin href="./j/assets/math-utils-1c6b45c8.js">
+
+  <style>
+   
+  #iframe {
+    height:100vh;
+    width:100%;
+    margin:-0px;
+    position: absolute;
+    z-index: 0;
+
+  }
+  #app {
+    height:100vh;
+    width:100%;
+    margin-top:-24px;
+    position: absolute;
+    z-index: 3;
+  }
+    #cnv{
+        height:100vh;
+    width:100%;
+   margin: 0;
+    position: absolute;
+    z-index: 9;
+    opacity: .6;
+}
+
+#startButton {
+    margin: 40%;
+   position: absolute;
+   z-index: 66;
+}
+  #box {
+    margin-left:40%;
+    margin-right:40%;
+    position: absolute;
+    z-index: 4; 
+    height:20px;
+  }
+  </style>
+  </head>
+  <body>
+    <!-- Import maps polyfill -->
+		<!-- Remove this when import maps will be widely supported -->
+        
+
+	
+
+
+        <div id="overlay">
+			<button id="startButton">Play this demo</button>
+			<br>
+				<div class="text_container">
+			<h3>info: This is a webgl demo that projection maps a video into many surfaces in real time. It's touch-active and best viewd
+				on a laptop or desktop using a recent version of Chrome.</h3>
+				</div>
+		</div>
+		<div class="container">
+	  
+      <video id="video" loop crossOrigin="anonymous" playsinline style="display:none">
+        <source src="assets/Squares.webm" type='video/webm'>
+      </video>
+    </div>
+     <iframe id="iframe"  title="Musicbox" frameborder="0"  src="./index3.html"> </iframe> </div>
+
+    <canvas id="app"></canvas>
+    <script type="module" src="./j/index.js"></script>
+    <audio id="box" controls autoplay loop src="./The_Music_Box.mp3"></audio>
+  </body>
+</html>

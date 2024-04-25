@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Same camera example - three-projected-material</title>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.163.0/build/three.module.js", 
+            "three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm/",
+            "three/nodes": "https://unpkg.com/three@0.163.0/examples/jsm/nodes/Nodes.js"
+         }
+        }
+      </script>
+
+    <link rel="modulepreload" crossorigin href="./j/assets/math-utils-1c6b45c8.js">
+
+  <style>
+   
+  #iframe {
+    height:100vh;
+    width:100%;
+    margin:-0px;
+    position: absolute;
+    z-index: 0;
+
+  }
+  html, body {
+background-color: rgb(0, 0, 0);
+
+}
+  #app {
+    height:100vh;
+    width:100%;
+    margin-top:-24px;
+    position: absolute;
+    z-index: 3;
+  }
+    #cnv{
+        height:100vh;
+    width:100%;
+   margin: 0;
+    position: absolute;
+    z-index: 9;
+    opacity: .6;
+}
+
+#startButton {
+    margin: 40%;
+   position: absolute;
+   z-index: 66;
+}
+  #box {
+    margin-left:40%;
+    margin-right:40%;
+    position: absolute;
+    z-index: 4; 
+    height:20px;
+  }
+  </style>
+  </head>
+  <body>
+ 
+	
+		<div class="container">
+	  
+      <video id="video" loop crossOrigin="anonymous" playsinline style="display:none">
+        <source src="assets/Squares.webm" type='video/webm'>
+      </video>
+    </div>
+
+    <canvas id="app"></canvas>
+    <script type="module" src="j/orth2.js "></script>
+    <audio id="box" controls autoplay loop src="./The_Music_Box.mp3"></audio>
+  </body>
+</html>
