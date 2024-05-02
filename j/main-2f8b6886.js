@@ -10,7 +10,7 @@ const x = new W;
 x.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(x.domElement);
 const s = document.createElement("video");
-s.src = "./assets/Cube.mp4";
+s.src = "./assets/Squares_VP9.webm";
 s.muted = !0;
 s.loop = !0;
 s.play();
@@ -18,9 +18,9 @@ const N = new h(s)
   , c = new v
   , U = 100;
 for (let i = 0; i < U; i++) {
-    const w = new E(o(.6, -.5),o(.51, -.7),(.040,
+    const w = new E(o(.6, -.5),o(.51, -.7),(.540,
     -.39))
-      , e = 1
+      , e = 21
       , u = window.innerWidth / e * window.devicePixelRatio
       , f = window.innerHeight / e * window.devicePixelRatio;
     let M;
