@@ -99,7 +99,7 @@ const V = new C("#fff",.79);
 t.scene.add(V);
 c.rotation.y = Math.PI / 1;
 t.onUpdate(()=>{
-    c.rotation.y -= 60;
+    c.rotation.y -= 23.7;
 }
 );
 t.start();
