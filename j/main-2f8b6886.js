@@ -20,13 +20,13 @@ const N = new h(s)
 for (let i = 0; i < U; i++) {
     const w = new E(o(.6, .5),o(.51, -.37),(.540,
     .39))
-      , e = 2
+      , e = 1
       , u = window.innerWidth / e * window.devicePixelRatio
       , f = window.innerHeight / e * window.devicePixelRatio;
     let M;
     for (let a = 0; a < e; a++)
         for (let m = 0; m < e; m++) {
-            const n = new z(u * 4 / f * 4);
+            const n = new z(u * 2 / f * 2);
             n.viewport = new G(Math.floor(m * u),Math.floor(a * f),Math.ceil(u),Math.ceil(f)),
             n.position.x = 12 - m / e,
             n.position.y = -10 / (a / e),
