@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>haawke-the music box</title>
-  <link rel="modulepreload" crossorigin="" href="./j/assets/math-utils-1c6b45c8.js">  
+	     <script type="module" crossorigin src="./j/assets/main-2f8b6886.js"></script>
+   
+    
+      <link rel="modulepreload" crossorigin="" href="./j/assets/math-utils-1c6b45c8.js">  
 	 <script type="module" crossorigin src="./j/three.module.js"></script>	 
 	  <link rel="stylesheet" href="./j/assets/math-utils-d0e09dec.css">  
   <style>
@@ -13,21 +16,7 @@
         background-color: rgb(8, 8, 8);
   }
 
-  #dancer{
-    height:120vh;
-    width:120%;
-    margin-left:0;   
-	  margin-right:30;
-	    margin-bottom:30;	
- margin-top:5;	
-	  position: absolute;
-    z-index: 30;
-    backdrop-filter: contrast(40%);
-backdrop-filter: drop-shadow(4px 4px 10px blue);
-backdrop-filter: grayscale(30%);
-backdrop-filter: hue-rotate(20deg);
 
-  }
   #ol {
     height:100%;
     width:100%;
@@ -105,9 +94,8 @@ console.log('sound');
     
 
  <canvas id="cnv2"></canvas>
-
-  
-	  <iframe id="dancer"  title="dancer" frameborder="0"  src="./dancer.html"> </iframe> 
+ <canvas id="app"></canvas>   
+	
   <iframe id="ol"  title="logo" frameborder="0"  src="./ol.html"> </iframe> 
  </div>
   </body>
