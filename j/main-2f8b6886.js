@@ -81,7 +81,7 @@ for (let i = 0; i < I; i++) {
 let y;
 y = t.camera;
 const l = document.createElement("video");
-l.src = "./assets/isabelle-cassuto-movie-both-black.mp4";
+l.src = "./assets/Cube.webm";
 l.muted = !0;
 l.loop = !0;
 l.play();
