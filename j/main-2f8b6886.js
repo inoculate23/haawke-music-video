@@ -16,11 +16,11 @@ s.loop = !0;
 s.play();
 const N = new h(s)
   , c = new v
-  , U = 100;
+  , U = 190;
 for (let i = 0; i < U; i++) {
     const w = new E(o(.6, .5),o(.51, -.37),(.540,
     .39))
-      , e = 91
+      , e = 2
       , u = window.innerWidth / e * window.devicePixelRatio
       , f = window.innerHeight / e * window.devicePixelRatio;
     let M;
@@ -28,7 +28,7 @@ for (let i = 0; i < U; i++) {
         for (let m = 0; m < e; m++) {
             const n = new z(u * 4 / f * 4);
             n.viewport = new G(Math.floor(m * u),Math.floor(a * f),Math.ceil(u),Math.ceil(f)),
-            n.position.x = -12 - m / e,
+            n.position.x = 12 - m / e,
             n.position.y = -10 / (a / e),
             n.position.z = -.5 + a / e,
             n.position.multiplyScalar(1),
