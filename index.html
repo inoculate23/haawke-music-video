@@ -3,27 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>haawke 'the music box'</title>
-  
-    <link rel="modulepreload" crossorigin href="./j/assets/math-utils-1c6b45c8.js">
-  <link rel="stylesheet" href="./c/math-utils-d0e09dec.css">
-	   <script type="module" crossorigin src="./j/main-2f8b6886.js"></script>
-	 <script type="module" crossorigin src="./j/three.module.js"</script>     
-    <link rel="stylesheet" href="./c/math-utils-d0e09dec.css">
-
-
-    
+    <title>Same camera example - three-projected-material</title>
+  <link rel="modulepreload" crossorigin="" href="./assets/math-utils-1c6b45c8.js">  
+	  <link rel="modulepreload" crossorigin href="./j/sq.js">
+	  <link rel="stylesheet" href="./assets/math-utils-d0e09dec.css">  
   <style>
       html, body {
   overflow:hidden;
-        background-color: rgb(5, 5, 8);
+        background-color: rgb(8, 8, 8);
   }
 
-  #iframe {
-    height:150vh;
-    width:150%;
-    margin:0px;
-    position: absolute;
+  #dancer{
+    height:120vh;
+    width:120%;
+    margin-left:0;   
+	  margin-right:30;
+	    margin-bottom:30;	
+ margin-top:5;	
+	  position: absolute;
     z-index: 30;
     backdrop-filter: contrast(40%);
 backdrop-filter: drop-shadow(4px 4px 10px blue);
@@ -36,7 +33,7 @@ backdrop-filter: hue-rotate(20deg);
     width:100%;
     margin:0px;
     position: absolute;
-    z-index: 32;
+    z-index: 12;
   }
 #cnv2 {
   height:100vh;
@@ -51,19 +48,22 @@ backdrop-filter: hue-rotate(20deg);
     width:100%;
     margin:0px;
     position: absolute;
-    z-index: 32;
+    z-index: 2;
  opacity: 1;
 
 
   }
-  #video{
+  #app1, #app4 {
     height:100vh;
     width:100%;
     margin:0px;
     position: absolute;
-    z-index: 16;
+    z-index: 2;
  opacity: 1; 
-
+ backdrop-filter: contrast(40%);
+backdrop-filter: drop-shadow(4px 4px 10px blue);
+backdrop-filter: grayscale(30%);
+backdrop-filter: hue-rotate(60deg);
 
 
   }
@@ -72,11 +72,10 @@ backdrop-filter: hue-rotate(20deg);
   <body>
     <script type="module">
 
-			import * as THREE from './j/three.module.js';
 
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+const camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.1, 1000 );
+camera.position = 3, -4, 2;
+	const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.domElement.id = 'cnv2';
 		renderer.setClearColor( 0x00000 );
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -103,21 +102,15 @@ console.log('sound');
   
   </script>
 
-  <div class="main">
+  <div class="app4">
     
-  </div>
- 
-  
 
-    
-      <canvas id="app"></canvas>  
-	  <canvas class="app4" id="app1"></canvas>
- 
+ <canvas id="cnv2"></canvas>
 
+   </div>
+	  <iframe id="dancer"  title="dancer" frameborder="0"  src="./dancer.html"> </iframe> 
+  <iframe id="ol"  title="logo" frameborder="0"  src="./ol.html"> </iframe> 
 
-
-
-    
 
   </body>
 </html>
