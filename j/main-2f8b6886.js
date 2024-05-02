@@ -28,20 +28,20 @@ for (let i = 0; i < U; i++) {
         for (let m = 0; m < e; m++) {
             const n = new z(u * 2 / f * 2);
             n.viewport = new G(Math.floor(m * u),Math.floor(a * f),Math.ceil(u),Math.ceil(f)),
-            n.position.x = 12 - m / e,
+            n.position.x = -8 - m / e,
             n.position.y = -10 / (a / e),
-            n.position.z = -.5 + a / e,
-            n.position.multiplyScalar(1),
+            n.position.z = 1 + a / e,
+            n.position.multiplyScalar(2),
             n.lookAt(5, -5, 0),
             n.updateMatrixWorld()
         }
     M = t.camera,
-    M.position.z = 1;
+    M.position.z = 2;
     const b = new L({
         camera: t.camera,
         texture: N,
         color: "#1b1a1a",
-        textureScale: 2.4
+        textureScale: 4.4
     })
       , r = new S(w,b);
     r.position.x = o(-1, 1),
