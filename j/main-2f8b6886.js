@@ -31,7 +31,7 @@ for (let i = 0; i < U; i++) {
             n.position.x = 2- m / e,
             n.position.y = -1 / (a / e),
             n.position.z = 1 + a / e,
-            n.position.multiplyScalar(2),
+            n.position.multiplyScalar(6),
             n.lookAt(5, -5, 0),
             n.updateMatrixWorld()
         }
