@@ -54,7 +54,7 @@ let p;
 p = t.camera;
 p.position.z = 1;
 const d = document.createElement("video");
-d.src = "./assets/Squares_VP9.webm";
+d.src = "./assets/3DGridCity.webm";
 d.muted = !0;
 d.loop = !0;
 d.play();
@@ -81,7 +81,7 @@ for (let i = 0; i < I; i++) {
 let y;
 y = t.camera;
 const l = document.createElement("video");
-l.src = "./assets/3DGridCity.webm;
+l.src = "./assets/Squares_VP9.webm";
 l.muted = !0;
 l.loop = !0;
 l.play();
