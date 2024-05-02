@@ -16,7 +16,7 @@
           texture,
         //  texture2,
           color: '#1c1c1c',
-          textureScale: 0.8,
+          textureScale: 1.08,
         })
         const element = new THREE.Mesh(geometry, material)
 
