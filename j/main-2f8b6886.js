@@ -41,7 +41,7 @@ for (let i = 0; i < U; i++) {
         camera: t.camera,
         texture: N,
         color: "#1b1a1a",
-        textureScale: 4.4
+        textureScale: 2.4
     })
       , r = new S(w,b);
     r.position.x = o(-1, 1),
