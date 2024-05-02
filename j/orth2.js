@@ -25,7 +25,7 @@ const p = 50
   , i = q(0, a.camera)
   , c = g(0, a.camera)
   , m = document.createElement("video");
-m.src = "./assets/Cube.mp4";
+m.src = "./assets/3DGridCity.webm";
 m.muted = !0;
 m.loop = !0;
 m.play();
