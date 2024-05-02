@@ -18,8 +18,8 @@ const N = new h(s)
   , c = new v
   , U = 100;
 for (let i = 0; i < U; i++) {
-    const w = new E(o(.6, -.5),o(.51, -.7),(.540,
-    -.39))
+    const w = new E(o(.6, .5),o(.51, -.7),(.540,
+    .39))
       , e = 21
       , u = window.innerWidth / e * window.devicePixelRatio
       , f = window.innerHeight / e * window.devicePixelRatio;
