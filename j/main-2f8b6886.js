@@ -54,7 +54,7 @@ let p;
 p = t.camera;
 p.position.z = 1;
 const d = document.createElement("video");
-d.src = "./assets/";
+d.src = "./assets/Squares_VP9.webm".
 d.muted = !0;
 d.loop = !0;
 d.play();
