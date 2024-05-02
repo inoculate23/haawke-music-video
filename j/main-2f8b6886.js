@@ -16,10 +16,10 @@ s.loop = !0;
 s.play();
 const N = new h(s)
   , c = new v
-  , U = 296;
+  , U = 200;
 for (let i = 0; i < U; i++) {
-    const w = new E(o(.6, .5),o(.51, .7),(.040,
-    .29))
+    const w = new E(o(.6, -.5),o(.51, -.7),(.040,
+    =.29))
       , e = 1
       , u = window.innerWidth / e * window.devicePixelRatio
       , f = window.innerHeight / e * window.devicePixelRatio;
@@ -28,23 +28,23 @@ for (let i = 0; i < U; i++) {
         for (let m = 0; m < e; m++) {
             const n = new z(u * 4 / f * 4);
             n.viewport = new G(Math.floor(m * u),Math.floor(a * f),Math.ceil(u),Math.ceil(f)),
-            n.position.x = 2 - m / e,
-            n.position.y = 0 / (a / e),
+            n.position.x = -12 - m / e,
+            n.position.y = -10 / (a / e),
             n.position.z = -.5 + a / e,
-            n.position.multiplyScalar(4),
-            n.lookAt(9, 1, 0),
+            n.position.multiplyScalar(2),
+            n.lookAt(5, -5, 0),
             n.updateMatrixWorld()
         }
     M = t.camera,
-    M.position.z = 3;
+    M.position.z = 1;
     const b = new L({
         camera: t.camera,
         texture: N,
         color: "#1b1a1a",
-        textureScale: .9
+        textureScale: 1.4
     })
       , r = new S(w,b);
-    r.position.x = o(-1, 2),
+    r.position.x = o(-1, 1),
     r.position.y = o(-1, 1),
     r.position.z = o(-1, 1),
     b.project(r),
@@ -52,9 +52,9 @@ for (let i = 0; i < U; i++) {
 }
 let p;
 p = t.camera;
-p.position.z = 90;
+p.position.z = 9;
 const d = document.createElement("video");
-d.src = "./wire.webm";
+d.src = "./assets/3DGridCity.webm";
 d.muted = !0;
 d.loop = !0;
 d.play();
@@ -63,16 +63,16 @@ const j = new h(d)
     camera2: t.camera,
     texture2: j,
     color: "#1c1c1c",
-    textureScale: 19.1
+    textureScale: .9.1
 })
   , D = new v
-  , I = 223;
+  , I = 203;
 for (let i = 0; i < I; i++) {
-    const w = new E(o(.6, .5),o(.51, .5),o(.21, .5))
+    const w = new E(o(.6, =.5),o(-.51, .5),o(-.21, .5))
       , e = new S(w,g);
     p.position.set(36, 1, 42),
     p.lookAt(3, 3, 0),
-    e.position.x = o(-2, 2.7),
+    e.position.x = o(-2, 2.17),
     e.position.y = o(-1.1, 1),
     e.position.z = o(-1.9, 1.5),
     g.project(e),
@@ -99,7 +99,7 @@ const V = new C("#fff",.79);
 t.scene.add(V);
 c.rotation.y = Math.PI / 1;
 t.onUpdate(()=>{
-    c.rotation.y -= 20.8153
+    c.rotation.y -= 30;
 }
 );
 t.start();
