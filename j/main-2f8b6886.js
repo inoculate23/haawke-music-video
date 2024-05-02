@@ -10,7 +10,7 @@ const x = new W;
 x.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(x.domElement);
 const s = document.createElement("video");
-s.src = "./assets/Squares_VP9.webm";
+s.src = "./assets/Cube.mp4";
 s.muted = !0;
 s.loop = !0;
 s.play();
@@ -81,7 +81,7 @@ for (let i = 0; i < I; i++) {
 let y;
 y = t.camera;
 const l = document.createElement("video");
-l.src = "./assets/Squares_VP9.webm";
+l.src = "./assets/isabelle-cassuto-movie-both-black.mp4";
 l.muted = !0;
 l.loop = !0;
 l.play();
