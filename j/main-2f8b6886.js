@@ -16,10 +16,10 @@ s.loop = !0;
 s.play();
 const N = new h(s)
   , c = new v
-  , U = 200;
+  , U = 100;
 for (let i = 0; i < U; i++) {
     const w = new E(o(.6, -.5),o(.51, -.7),(.040,
-    =.29))
+    -.29))
       , e = 1
       , u = window.innerWidth / e * window.devicePixelRatio
       , f = window.innerHeight / e * window.devicePixelRatio;
@@ -41,7 +41,7 @@ for (let i = 0; i < U; i++) {
         camera: t.camera,
         texture: N,
         color: "#1b1a1a",
-        textureScale: 1.4
+        textureScale: 2.4
     })
       , r = new S(w,b);
     r.position.x = o(-1, 1),
@@ -63,12 +63,12 @@ const j = new h(d)
     camera2: t.camera,
     texture2: j,
     color: "#1c1c1c",
-    textureScale: .9.1
+    textureScale: 1.0
 })
   , D = new v
   , I = 203;
 for (let i = 0; i < I; i++) {
-    const w = new E(o(.6, =.5),o(-.51, .5),o(-.21, .5))
+    const w = new E(o(.6, -.5),o(-.51, .5),o(-.21, .5))
       , e = new S(w,g);
     p.position.set(36, 1, 42),
     p.lookAt(3, 3, 0),
