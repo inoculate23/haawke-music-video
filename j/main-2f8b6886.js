@@ -16,10 +16,10 @@ s.loop = !0;
 s.play();
 const N = new h(s)
   , c = new v
-  , U = 390;
+  , U = 200;
 for (let i = 0; i < U; i++) {
-    const w = new E(o(.8, .5),o(.51, -.20),(.740,
-    .79))
+    const w = new E(o(.8, .5),o(.51, .60),(.740,
+    .59))
       , e = 1
       , u = window.innerWidth / e * window.devicePixelRatio
       , f = window.innerHeight / e * window.devicePixelRatio;
