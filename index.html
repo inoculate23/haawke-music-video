@@ -74,8 +74,8 @@ backdrop-filter: hue-rotate(60deg);
 
 
 const camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+camera.position = 3, -4, 2;
+	const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.domElement.id = 'cnv2';
 		renderer.setClearColor( 0x00000 );
 renderer.setSize( window.innerWidth, window.innerHeight );
