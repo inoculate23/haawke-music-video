@@ -28,8 +28,8 @@ for (let i = 0; i < U; i++) {
         for (let m = 0; m < e; m++) {
             const n = new z(u * 2 / f * 2);
             n.viewport = new G(Math.floor(m * u),Math.floor(a * f),Math.ceil(u),Math.ceil(f)),
-            n.position.x = -8 - m / e,
-            n.position.y = -10 / (a / e),
+            n.position.x = 2- m / e,
+            n.position.y = -1 / (a / e),
             n.position.z = 1 + a / e,
             n.position.multiplyScalar(2),
             n.lookAt(5, -5, 0),
@@ -54,7 +54,7 @@ let p;
 p = t.camera;
 p.position.z = 1;
 const d = document.createElement("video");
-d.src = "./assets/3DGridCity.webm";
+d.src = "./assets/";
 d.muted = !0;
 d.loop = !0;
 d.play();
