@@ -19,7 +19,7 @@ const N = new h(s)
   , U = 100;
 for (let i = 0; i < U; i++) {
     const w = new E(o(.6, -.5),o(.51, -.7),(.040,
-    -.29))
+    -.39))
       , e = 1
       , u = window.innerWidth / e * window.devicePixelRatio
       , f = window.innerHeight / e * window.devicePixelRatio;
@@ -31,7 +31,7 @@ for (let i = 0; i < U; i++) {
             n.position.x = -12 - m / e,
             n.position.y = -10 / (a / e),
             n.position.z = -.5 + a / e,
-            n.position.multiplyScalar(2),
+            n.position.multiplyScalar(1),
             n.lookAt(5, -5, 0),
             n.updateMatrixWorld()
         }
@@ -39,7 +39,7 @@ for (let i = 0; i < U; i++) {
     M.position.z = 1;
     const b = new L({
         camera: t.camera,
-        texture: N,
+        texture: y,
         color: "#1b1a1a",
         textureScale: 2.4
     })
@@ -52,7 +52,7 @@ for (let i = 0; i < U; i++) {
 }
 let p;
 p = t.camera;
-p.position.z = 9;
+p.position.z = 1;
 const d = document.createElement("video");
 d.src = "./assets/3DGridCity.webm";
 d.muted = !0;
@@ -63,14 +63,14 @@ const j = new h(d)
     camera2: t.camera,
     texture2: j,
     color: "#1c1c1c",
-    textureScale: 1.0
+    textureScale: 0.6
 })
   , D = new v
-  , I = 203;
+  , I = 103;
 for (let i = 0; i < I; i++) {
-    const w = new E(o(.6, -.5),o(-.51, .5),o(-.21, .5))
+    const w = new E(o(.6, -.5),o(-.51, .5),o(-.51, .5))
       , e = new S(w,g);
-    p.position.set(36, 1, 42),
+    p.position.set(6, 1, 4),
     p.lookAt(3, 3, 0),
     e.position.x = o(-2, 2.17),
     e.position.y = o(-1.1, 1),
@@ -99,7 +99,7 @@ const V = new C("#fff",.79);
 t.scene.add(V);
 c.rotation.y = Math.PI / 1;
 t.onUpdate(()=>{
-    c.rotation.y -= 30;
+    c.rotation.y -= 60;
 }
 );
 t.start();
