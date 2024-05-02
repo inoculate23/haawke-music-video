@@ -11,7 +11,7 @@ x.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(x.domElement);
 const s = document.createElement("video");
 s.src = "./assets/Squares_VP9.webm";
-//s.muted = !0;
+s.muted = !0;
 s.loop = !0;
 s.play();
 const N = new h(s)
@@ -41,7 +41,7 @@ for (let i = 0; i < U; i++) {
         camera: t.camera,
         texture: N,
         color: "#1b1a1a",
-        textureScale: 2.4
+        textureScale: 4.4
     })
       , r = new S(w,b);
     r.position.x = o(-1, 1),
