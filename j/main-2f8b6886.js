@@ -39,7 +39,7 @@ for (let i = 0; i < U; i++) {
     M.position.z = 1;
     const b = new L({
         camera: t.camera,
-        texture: y,
+        texture: N,
         color: "#1b1a1a",
         textureScale: 2.4
     })
