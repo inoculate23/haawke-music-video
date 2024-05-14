@@ -56,10 +56,19 @@ backdrop-filter: hue-rotate(60deg);
 
 
   }
+	  #start_text {
+		  margin-right:5px;
+		  margin-left:80%;
+		  margin-top:5px;
+margin-bottom:90%;
+		  position:absolute:
+		  z-index:99;
+		  color:white;
+	  }
   </style>
   </head>
   <body>
-	  Click to start audio
+	 <h3 id="start_text"> Click to start audio</h3>
     <script type="module">
 import * as THREE from './j/three.module.js';
 const camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.1, 1000 );
