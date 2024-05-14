@@ -73,17 +73,35 @@ margin-bottom:90%;
   </style>
   </head>
   <body>
-	  <div id="container">
-	<div> 
-		
-		
-			<h3 id="start_text"> Click to start audio</h3>
-	</div>
+	
+	<div id="overlay">
+			<button id="startButton">Play</button>
+		</div>
+		<div id="container"></div>
+
+
+
 
 
 
     <script type="module">
 import * as THREE from './j/three.module.js';
+
+	    const startButton = document.getElementById( 'startButton' );
+			startButton.addEventListener( 'click', function () {
+
+				init();
+				animate();
+
+			} );
+
+			function init() {
+
+				const overlay = document.getElementById( 'overlay' );
+				overlay.remove();
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
 const camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.1, 1000 );
 camera.position.y = -4;
 	const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -91,6 +109,14 @@ renderer.domElement.id = 'cnv2';
 		renderer.setClearColor( 0x00000 );
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.append( renderer.domElement );
+
+				video = document.getElementById( 'video' );
+				video.play();
+				video.addEventListener( 'play', function () {
+
+					this.currentTime = 3;
+
+				} );
       const listener = new THREE.AudioListener();
 camera.add( listener );
 
