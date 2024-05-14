@@ -56,10 +56,31 @@ backdrop-filter: hue-rotate(60deg);
 
 
   }
-
+ #start_text {
+	  width: 120px;
+		  margin-right:5px;
+		  margin-left:80%;
+		  margin-top:5px;
+margin-bottom:90%;
+		  position:absolute:
+		  z-index:99;
+		  color:white;
+	  }
+	  #container {
+	flex: auto;
+	  width:100%;
+	  }
   </style>
   </head>
   <body>
+	  <div id="container">
+	<div> 
+		
+		
+			<h3 id="start_text"> Click to start audio</h3>
+	</div>
+
+
 
     <script type="module">
 import * as THREE from './j/three.module.js';
@@ -100,5 +121,6 @@ console.log('sound');
 	
   <iframe id="ol"  title="logo" frameborder="0"  src="./ol.html"> </iframe> 
  </div>
+	  </div>
   </body>
 </html>
