@@ -158,16 +158,15 @@ let video, texture, material, mesh;
 			let analyserTexture;
 
 
-	
-	    const startButton = document.getElementById( 'startButton' );
 			startButton.addEventListener( 'click', function () {
 const startButton2 = document.getElementById( 'startButton' );
-			startButton.addEventListener( 'click', function init() );
-				
+			startButton.addEventListener( 'click', init );
+				init();
 				animate();
 
 
 			} );
+
 
 			function init() {
 
@@ -183,10 +182,14 @@ const startButton2 = document.getElementById( 'startButton' );
 //		renderer.setClearColor( 0x00000 );
 //renderer.setSize( window.innerWidth, window.innerHeight );
 //document.body.append( renderer.domElement );
-		const listener = new THREE.AudioListener();
+	
+	
+
+			function init() {
+				const listener = new THREE.AudioListener();
 
 				const audio = new THREE.Audio( listener );
-				const file = 'music_box2.mp3';
+				const file = './j/music_box2.mp3';
 
 				if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) {
 
@@ -207,9 +210,17 @@ const startButton2 = document.getElementById( 'startButton' );
 
 				}
 
-	
 
-			function init() {
+			
+
+					
+
+			
+
+	this.currentTime = 3;
+  	});
+
+			}
 
 				const overlay = document.getElementById( 'overlay' );
 				overlay.remove();
