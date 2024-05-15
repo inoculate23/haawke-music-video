@@ -112,7 +112,7 @@ margin-bottom:10%;
             {
             "imports": {
                 "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.164.1/three.module.js",
-                "OrbitControls": "https://unpkg.com/three@0.164.1/examples/jsm/controls/OrbitControls.js",
+            
 	      "three/nodes": "https://unpkg.com/three@0.164.1/examples/jsm/nodes/Nodes.js",
 	 "three/addons": "https://unpkg.com/three@0.164.1/examples/jsm/"
            }
@@ -127,7 +127,7 @@ margin-bottom:10%;
 
 
 
-			import { OrbitControls } from 'https://unpkg.com/three@0.164.1/examples/jsm/controls/OrbitControls.js';
+			
 
 			import StorageBufferAttribute from 'https://unpkg.com/three@0.164.1/examples/jsm/renderers/common/StorageBufferAttribute.js';
 let video, texture, material, mesh;
@@ -261,15 +261,6 @@ let video, texture, material, mesh;
 
 			}
 	    
-
-				const controls = new OrbitControls( camera, renderer.domElement );
-				controls.minDistance = 1;
-				controls.maxDistance = 5;
-				controls.target.set( 0, - 0.1,  0.2 );
-				controls.update();
-				controls.addEventListener( 'change', render ); // use if there is no animation loop
-
-				window.addEventListener( 'resize', onWindowResize );
 
 			//
 	    	function animate() {
