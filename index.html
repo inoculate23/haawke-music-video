@@ -88,11 +88,39 @@ margin-bottom:40%;
              }
             }
           </script>
+<script type="importmap">
+			{
+				"imports": {
+					
+					"three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm",
+					"three/nodes": "https://unpkg.com/three@0.163.0/examples/jsm/nodes/Nodes.js"
+				}
+			}
+		</script>
+
 
 
     <script type="module">
 import * as THREE from './j/three.module.js';
 
+	
+import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, viewportTopLeft, color } from 'three/nodes';
+
+			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+
+			import WebGPURenderer from 'three/addons/renderers/webgpu/WebGPURenderer.js';
+			import StorageInstancedBufferAttribute from 'three/addons/renderers/common/StorageInstancedBufferAttribute.js';
+
+			
+			let computeNode;
+			let waveBuffer, sampleRate;
+			let waveGPUBuffer;
+			let currentAudio, currentAnalyser;
+			const analyserBuffer = new Uint8Array( 1024 );
+			let analyserTexture;
+
+
+	        
 	    const startButton = document.getElementById( 'startButton' );
 			startButton.addEventListener( 'click', function () {
 const startButton2 = document.getElementById( 'startButton' );
@@ -102,7 +130,6 @@ const startButton2 = document.getElementById( 'startButton' );
 
 
 			} );
-
 			function init() {
 
 				const overlay = document.getElementById( 'overlay' );
@@ -117,29 +144,176 @@ renderer.domElement.id = 'cnv2';
 		renderer.setClearColor( 0x00000 );
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.append( renderer.domElement );
-		const listener = new THREE.AudioListener();
+		
+			async function playAudioBuffer() {
 
-				const audio = new THREE.Audio( listener );
-				const file = './j/music_box2.mp3';
+				if ( currentAudio ) currentAudio.stop();
 
-				if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) {
+				// compute audio
 
-					const loader = new THREE.AudioLoader();
-					loader.load( file, function ( buffer ) {
+				await renderer.computeAsync( computeNode );
 
-						audio.setBuffer( buffer );
-						audio.play();
+				const waveArray = new Float32Array( await renderer.getArrayBufferAsync( waveGPUBuffer ) );
 
-					} );
+				// play result
 
-				} else {
+				const audioOutputContext = new AudioContext( { sampleRate } );
+				const audioOutputBuffer = audioOutputContext.createBuffer( 1, waveArray.length, sampleRate );
 
-					const mediaElement = new Audio( file );
-					mediaElement.play();
+				audioOutputBuffer.copyToChannel( waveArray, 0 );
 
-					audio.setMediaElementSource( mediaElement );
+				const source = audioOutputContext.createBufferSource();
+				source.connect( audioOutputContext.destination );
+				source.buffer = audioOutputBuffer;
+				source.start();
 
-				}
+				currentAudio = source;
+
+				// visual feedback
+
+				currentAnalyser = audioOutputContext.createAnalyser();
+				currentAnalyser.fftSize = 2048;
+
+				source.connect( currentAnalyser );
+
+			}
+
+			async function init() {
+
+				// if ( WebGPU.isAvailable() === false ) {
+
+				// 	document.body.appendChild( WebGPU.getErrorMessage() );
+
+				// 	throw new Error( 'No WebGPU support' );
+
+				// }
+
+			
+
+				// audio buffer
+
+				const soundBuffer = await fetch( 'sounds/webgpu-audio-processing.mp3' ).then( res => res.arrayBuffer() );
+				const audioContext = new AudioContext();
+
+				const audioBuffer = await audioContext.decodeAudioData( soundBuffer );
+
+				waveBuffer = audioBuffer.getChannelData( 0 );
+
+				// adding extra silence to delay and pitch
+				waveBuffer = new Float32Array( [ ...waveBuffer, ...new Float32Array( 200000 ) ] );
+
+				sampleRate = audioBuffer.sampleRate / audioBuffer.numberOfChannels;
+
+
+				// create webgpu buffers
+
+				waveGPUBuffer = new StorageInstancedBufferAttribute( waveBuffer, 1 );
+
+				const waveStorageNode = storage( waveGPUBuffer, 'float', waveBuffer.length );
+
+
+				// read-only buffer
+
+				const waveNode = storageObject( new StorageInstancedBufferAttribute( waveBuffer, 1 ), 'float', waveBuffer.length );
+
+
+				// params
+
+				const pitch = uniform( 1.5 );
+				const delayVolume = uniform( .2 );
+				const delayOffset = uniform( .55 );
+
+
+				// compute (shader-node)
+
+				const computeShaderFn = tslFn( () => {
+
+					const index = float( instanceIndex );
+
+					// pitch
+
+					const time = index.mul( pitch );
+
+					let wave = waveNode.element( time );
+
+
+					// delay
+
+					for ( let i = 1; i < 7; i ++ ) {
+
+						const waveOffset = waveNode.element( index.sub( delayOffset.mul( sampleRate ).mul( i ) ).mul( pitch ) );
+						const waveOffsetVolume = waveOffset.mul( delayVolume.div( i * i ) );
+
+						wave = wave.add( waveOffsetVolume );
+
+					}
+
+
+					// store
+
+					const waveStorageElementNode = waveStorageNode.element( instanceIndex );
+
+					waveStorageElementNode.assign( wave );
+
+				} );
+
+
+				// compute
+
+				computeNode = computeShaderFn().compute( waveBuffer.length );
+
+
+				// gui
+
+				const gui = new GUI();
+
+				gui.add( pitch, 'value', .5, 2, 0.01 ).name( 'pitch' );
+				gui.add( delayVolume, 'value', 0, 1, .01 ).name( 'delayVolume' );
+				gui.add( delayOffset, 'value', .1, 1, .01 ).name( 'delayOffset' );
+
+
+				// renderer
+
+				const container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.01, 30 );
+
+
+				// nodes
+
+				analyserTexture = new THREE.DataTexture( analyserBuffer, analyserBuffer.length, 1, THREE.RedFormat );
+
+				const spectrum = texture( analyserTexture, viewportTopLeft.x ).x.mul( viewportTopLeft.y );
+				const backgroundNode = color( 0x0000FF ).mul( spectrum );
+
+
+				// scene
+
+				scene = new THREE.Scene();
+				scene.backgroundNode = backgroundNode;
+
+				// renderer
+
+				renderer = new WebGPURenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( render );
+				container.appendChild( renderer.domElement );
+
+				window.addEventListener( 'resize', onWindowResize );
+
+
+				document.onclick = () => {
+
+					const overlay = document.getElementById( 'overlay' );
+					if ( overlay !== null ) overlay.remove();
+
+					playAudioBuffer();
+
+				};
+
+			}
 
 
 				video = document.getElementById( 'video' );
@@ -152,6 +326,28 @@ document.body.append( renderer.domElement );
 
 	this.currentTime = 3;
   	});
+
+			}
+	    	function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function render() {
+
+				if ( currentAnalyser ) {
+
+					currentAnalyser.getByteFrequencyData( analyserBuffer );
+
+					analyserTexture.needsUpdate = true;
+
+				}
+
+				renderer.render( scene, camera );
 
 			}
   </script>
