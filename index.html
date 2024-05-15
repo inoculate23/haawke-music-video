@@ -73,7 +73,7 @@ backdrop-filter: hue-rotate(60deg);
 		  margin-left:40%;
 		  margin-top:40%;
 margin-bottom:40%;
-		  position:absolute:
+		  position:absolute;
 		  z-index:99;
 		  color:black;
 	  }
@@ -272,9 +272,9 @@ const startButton2 = document.getElementById( 'startButton' );
 
 			
 
-				}
+				
 
-			}
+			
 
 
 			function onDocumentMouseMove( event ) {
@@ -356,14 +356,12 @@ const startButton2 = document.getElementById( 'startButton' );
 
 				postProcessing = new PostProcessing( renderer );
 				postProcessing.outputNode = compose;
-=
 
 							render();
 
-						} );
+						} 
 
-					} );
-
+				
 			
 
 				const controls = new OrbitControls( camera, renderer.domElement );
@@ -375,7 +373,7 @@ const startButton2 = document.getElementById( 'startButton' );
 
 				window.addEventListener( 'resize', onWindowResize );
 
-			}
+			
 
 			function onWindowResize() {
 
@@ -399,7 +397,7 @@ const startButton2 = document.getElementById( 'startButton' );
 
 				renderer.render( scene, camera );
 
-			}
+			
 
 
   </script>
