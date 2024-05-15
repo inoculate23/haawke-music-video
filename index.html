@@ -116,7 +116,7 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 			let analyserTexture;
    const startButton = document.getElementById( 'startButton' );
 			startButton.addEventListener( 'click', function () {
-const startButton2 = document.getElementById( 'startButton' );
+
 			startButton.addEventListener( 'click', init );
 				init();
 				animate();
@@ -281,8 +281,7 @@ const startButton2 = document.getElementById( 'startButton' );
 				overlay.remove();
 
 				
-const camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.1, 1000 );
-camera.position.y = -4;
+
 
 				// renderer
 
@@ -305,7 +304,8 @@ camera.position.y = -4;
 				};
 
 			}
-
+const camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.1, 1000 );
+camera.position.y = -4;
 			function onWindowResize() {
 
 				camera.aspect = window.innerWidth / window.innerHeight;
