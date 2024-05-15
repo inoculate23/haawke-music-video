@@ -91,7 +91,8 @@ margin-bottom:40%;
             "imports": {
                 "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.164.1/three.module.js",
                 "OrbitControls": "https://unpkg.com/three@0.138.0/examples/jsm/controls/OrbitControls.js",
-	      "three/nodes": "https://unpkg.com/three@0.163.0/examples/jsm/nodes/Nodes.js"
+	      "three/nodes": "https://unpkg.com/three@0.163.0/examples/jsm/nodes/Nodes.js",
+	 "three/addons": "https://unpkg.com/three@0.163.0/examples/jsm/"
            }
             }
           </script>
@@ -107,7 +108,18 @@ margin-bottom:40%;
 
 	import * as THREE from "three";
 import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, viewportTopLeft, color } from '//unpkg.com/three@0.163.0/examples/jsm/nodes/Nodes.js';
+import { vec3, cos, sin, mat3, storage, tslFn, instanceIndex, timerLocal } from 'three/nodes';
 
+			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+		
+
+			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+			import StorageBufferAttribute from 'three/addons/renderers/common/StorageBufferAttribute.js';
+
+			let camera, scene, renderer;
+			let computeUpdate;
 			import { GUI } from '//unpkg.com/three@0.163.0/examples/jsm/libs/lil-gui.module.min.js';
 
 			import WebGPURenderer from '//unpkg.com/three@0.163.0/examples/jsm/renderers/webgpu/WebGPURenderer.js';
@@ -134,134 +146,88 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 
 		
 
-			async function playAudioBuffer() {
+		const positionBaseAttribute = mesh.geometry.attributes.position;
+					const normalBaseAttribute = mesh.geometry.attributes.normal;
 
-				if ( currentAudio ) currentAudio.stop();
+					// replace geometry attributes for storage buffer attributes
 
-				// compute audio
+					const positionStorageBufferAttribute = new StorageBufferAttribute( positionBaseAttribute.count, 4 );
+					const normalStorageBufferAttribute = new StorageBufferAttribute( normalBaseAttribute.count, 4 );
 
-				await renderer.computeAsync( computeNode );
+					mesh.geometry.setAttribute( 'position', positionStorageBufferAttribute );
+					mesh.geometry.setAttribute( 'normal', normalStorageBufferAttribute );
 
-				const waveArray = new Float32Array( await renderer.getArrayBufferAsync( waveGPUBuffer ) );
+					// compute shader
 
-				// play result
+					const computeFn = tslFn( () => {
 
-				const audioOutputContext = new AudioContext( { sampleRate } );
-				const audioOutputBuffer = audioOutputContext.createBuffer( 1, waveArray.length, sampleRate );
+						const positionAttribute = storage( positionBaseAttribute, 'vec3', positionBaseAttribute.count );
+						const normalAttribute = storage( normalBaseAttribute, 'vec3', normalBaseAttribute.count );
 
-				audioOutputBuffer.copyToChannel( waveArray, 0 );
+						const positionStorageAttribute = storage( positionStorageBufferAttribute, 'vec4', positionStorageBufferAttribute.count );
+						const normalStorageAttribute = storage( normalStorageBufferAttribute, 'vec4', normalStorageBufferAttribute.count );
 
-				const source = audioOutputContext.createBufferSource();
-				source.connect( audioOutputContext.destination );
-				source.buffer = audioOutputBuffer;
-				source.start();
+						const time = timerLocal( 1 );
+						const scale = 0.3;
 
-				currentAudio = source;
+						//
 
-				// visual feedback
+						const position = vec3( positionAttribute.element( instanceIndex ) );
+						const normal = vec3( normalAttribute.element( instanceIndex ) );
 
-				currentAnalyser = audioOutputContext.createAnalyser();
-				currentAnalyser.fftSize = 2048;
+						const theta = sin( time.add( position.y ) ).mul( scale );
 
-				source.connect( currentAnalyser );
+						const c = cos( theta );
+						const s = sin( theta );
 
-			}
+						const m = mat3(
+							c, 0, s,
+							0, 1, 0,
+							s.negate(), 0, c
+						);
 
-			async function init() {
+						const transformed = position.mul( m );
+						const transformedNormal = normal.mul( m );
 
-				// if ( WebGPU.isAvailable() === false ) {
+						positionStorageAttribute.element( instanceIndex ).assign( transformed );
+						normalStorageAttribute.element( instanceIndex ).assign( transformedNormal );
 
-				// 	document.body.appendChild( WebGPU.getErrorMessage() );
+					} );
 
-				// 	throw new Error( 'No WebGPU support' );
-
-				// }
-
-			
-
-				// audio buffer
-
-				const soundBuffer = await fetch( './The_Music_Box.mp3' ).then( res => res.arrayBuffer() );
-				const audioContext = new AudioContext();
-
-				const audioBuffer = await audioContext.decodeAudioData( soundBuffer );
-
-				waveBuffer = audioBuffer.getChannelData( 0 );
-
-				// adding extra silence to delay and pitch
-				waveBuffer = new Float32Array( [ ...waveBuffer, ...new Float32Array( 200000 ) ] );
-
-				sampleRate = audioBuffer.sampleRate / audioBuffer.numberOfChannels;
-
-
-				// create webgpu buffers
-
-				waveGPUBuffer = new StorageInstancedBufferAttribute( waveBuffer, 1 );
-
-				const waveStorageNode = storage( waveGPUBuffer, 'float', waveBuffer.length );
-
-
-				// read-only buffer
-
-				const waveNode = storageObject( new StorageInstancedBufferAttribute( waveBuffer, 1 ), 'float', waveBuffer.length );
-
-
-				// params
-
-				const pitch = uniform( 1.0 );
-				const delayVolume = uniform( .1 );
-				const delayOffset = uniform( .1 );
-
-
-				// compute (shader-node)
-
-				const computeShaderFn = tslFn( () => {
-
-					const index = float( instanceIndex );
-
-					// pitch
-
-					const time = index.mul( pitch );
-
-					let wave = waveNode.element( time );
-
-
-					// delay
-
-					for ( let i = 1; i < 7; i ++ ) {
-
-						const waveOffset = waveNode.element( index.sub( delayOffset.mul( sampleRate ).mul( i ) ).mul( pitch ) );
-						const waveOffsetVolume = waveOffset.mul( delayVolume.div( i * i ) );
-
-						wave = wave.add( waveOffsetVolume );
-
-					}
-
-
-					// store
-
-					const waveStorageElementNode = waveStorageNode.element( instanceIndex );
-
-					waveStorageElementNode.assign( wave );
+					computeUpdate = computeFn().compute( positionBaseAttribute.count );
 
 				} );
 
-
-				// compute
-
-				computeNode = computeShaderFn().compute( waveBuffer.length );
-
-
-				// gui
-
-				const gui = new GUI();
-
-				gui.add( pitch, 'value', .5, 2, 0.01 ).name( 'pitch' );
-				gui.add( delayVolume, 'value', 0, 1, .01 ).name( 'delayVolume' );
-				gui.add( delayOffset, 'value', .1, 1, .01 ).name( 'delayOffset' );
-
-
 				// renderer
+
+				renderer = new WebGPURenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( animate );
+				document.body.appendChild( renderer.domElement );
+
+				const controls = new OrbitControls( camera, renderer.domElement );
+				controls.minDistance = .7;
+				controls.maxDistance = 2;
+
+				window.addEventListener( 'resize', onWindowResize );
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			async function animate() {
+
+				if ( computeUpdate ) await renderer.computeAsync( computeUpdate );
+
+				renderer.render( scene, camera );
 
 				const container = document.createElement( 'div' );
 				document.body.appendChild( container );
