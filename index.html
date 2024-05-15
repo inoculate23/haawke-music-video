@@ -3,91 +3,225 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Same camera example - three-projected-material</title>
-  
-    <link rel="modulepreload" crossorigin href="./j/assets/math-utils-1c6b45c8.js">
-  <link rel="stylesheet" href="./c/math-utils-d0e09dec.css">
-  <style>
+    <title>haawke-the music box</title>
+	     <script type="module" crossorigin src="./j/assets/main-2f8b6886.js"></script>
+       
+
+    
+      <link rel="modulepreload" crossorigin="" href="./j/assets/math-utils-1c6b45c8.js">  
+
+	  <link rel="stylesheet" href="./j/assets/math-utils-d0e09dec.css">  
+
+ <style>
       html, body {
-  
+overflow:hidden;
         background-color: rgb(8, 8, 8);
   }
+ #overlay {
+    height:100%;
+    width:100%;
+    margin:0px;
+    position: absolute;
+    z-index: 132;
+	 overflow:hidden;
+	
+  }
 
-  #iframe {
-    height:100vh;
-    width:100%;
-    margin:0px;
-    position: absolute;
-    z-index: 10;
-  }
   #ol {
-    height:100vh;
+    height:100%;
     width:100%;
     margin:0px;
     position: absolute;
-    z-index: 12;
+    z-index: 19;
   }
+	  #main_canvas {
+  height:100vh;
+    width:100%;
+    margin:0px;
+    position: absolute;
+    z-index: 16;
+    
+}
+
 #cnv2 {
   height:100vh;
     width:100%;
     margin:0px;
     position: absolute;
     z-index: 16;
+    
 }
-  #app {
+#app {
     height:100vh;
     width:100%;
     margin:0px;
     position: absolute;
-    z-index: 2;
- opacity: .9;
+    z-index:11;
+ opacity: 1;
+}
+#text  {
+	height:100vh;
+    width:100%;
+    margin:0px;
+    position: absolute;
+    z-index: -10;
+		
+	}
 
   }
+  #app1, #app4 {
+    height:100vh;
+    width:100%;
+    margin:0px;
+    position: absolute;
+    z-index: 11;
+ opacity: 1; 
+ backdrop-filter: contrast(40%);
+backdrop-filter: drop-shadow(4px 4px 10px blue);
+backdrop-filter: grayscale(30%);
+backdrop-filter: hue-rotate(60deg);
+
+
+  }
+ #startButton{
+	  width: 140px;
+		  margin-right:40%;
+		  margin-left:40%;
+		  margin-top:45%;
+margin-bottom:45%;
+		  position:absolute;
+		  z-index:99;
+		  color:black;
+	  }
+	   #cover {
+	  width: 100%;
+		   height:100vh;
+	margin:0;
+		  position:absolute;
+		  z-index:99;
+		  
+		 
+	  }
+	  #container {
+	flex: auto;
+	  width:100%;
+	  }
+
+
   </style>
   </head>
   <body>
+  <body>
+	  <div id="container">
+	
+	<div id="overlay">
+		<div>
+			<img id="cover" src="./assets/cover.png" />
+		
+			<button id="startButton">Play</button>
+		</div>
+			</div>
+
+ <script type="importmap">
+  </style>
+  </head>
+  <body><div id="container">
+	
+	<div id="overlay">
+			<button id="startButton">Play</button>
+		</div>
+		
+
+
+ <script type="importmap">
+            {
+              "imports": {
+             
+                "three/nodes": "https://unpkg.com/three@0.163.0/examples/jsm/nodes/Nodes.js"
+             }
+            }
+          </script>
+
+
     <script type="module">
+import * as THREE from './j/three.module.js';
 
-			import * as THREE from './j/three.module.js';
-      import{W as A,a as W,V as h,G as v,B as E,r as o,P as z,b as G,c as L,M as S,T as P,D as k,A as C}from"./j/math-utils-1c6b45c8.js";const H=document.querySelector("#app"),t=new A({canvas:H,showFps:!0,orbitControls:!0});window.webgl=t;const x=new W;x.setSize(window.innerWidth,window.innerHeight);document.body.appendChild(x.domElement);const s=document.createElement("video");s.src="./assets/Squares_VP9.webm";s.muted=!0;s.loop=!0;s.play();const N=new h(s),c=new v,U=30;for(let i=0;i<U;i++){const w=new E(o(.6,.5),o(4.9,-4.9),o(10.00,-10.7)),e=1,u=window.innerWidth/e*window.devicePixelRatio,f=window.innerHeight/e*window.devicePixelRatio;let M;for(let a=0;a<e;a++)for(let m=0;m<e;m++){const n=new z(u*2/f*2);n.viewport=new G(Math.floor(m*u),Math.floor(a*f),Math.ceil(u),Math.ceil(f)),n.position.x=2-m/e,n.position.y=0/(a/e),n.position.z=-.5+a/e,n.position.multiplyScalar(-3),n.lookAt(9,1,0),n.updateMatrixWorld()}M=t.camera,M.position.z=3;const b=new L({camera:t.camera,texture:N,color:"#040504",textureScale:3.0}),r=new S(w,b);r.position.x=o(-1,2),r.position.y=o(-1,1),r.position.z=o(-1,1),b.project(r),c.add(r)}let p;p=t.camera;p.position.z=90;const d=document.createElement("video");d.src="./assets/3DGridCity.webm";d.muted=!0;d.loop=!0;d.play();const j=new h(d),g=new L({camera2:t.camera,texture2:j,color:"#1c1c1c",textureScale:0.8}),D=new v,I=223;for(let i=0;i<I;i++){const w=new E(o(.6,.5),o(.51,.5),o(.21,.5)),e=new S(w,g);p.position.set(36,1,42),p.lookAt(3,3,0),e.position.x=o(-2,2.7),e.position.y=o(-1.1,1),e.position.z=o(-1.9,1.5),g.project(e),D.add(e)}let y;y=t.camera;const l=document.createElement("video");l.src="./assets/";l.muted=!0;l.loop=!0;l.play();const R=new h(l);t.scene.add(c);new P;t.scene.background=R;t.scene.background.receiveShadow=!0;y.position.set(6,1,-2);y.lookAt(3,0,2);const T=new k("#ffffff",.8);T.position.set(0,5,9);t.scene.add(T);const V=new C("#fff",.79);t.scene.add(V);c.rotation.y=Math.PI/1;t.onUpdate(()=>{c.rotation.y-=20.8153});t.start();
+	    const startButton = document.getElementById( 'startButton' );
+			startButton.addEventListener( 'click', function () {
+const startButton2 = document.getElementById( 'startButton' );
+			startButton.addEventListener( 'click', init );
+				init();
+				animate();
 
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+			} );
+
+			function init() {
+
+				const overlay = document.getElementById( 'overlay' );
+				overlay.remove();
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2( 0x00000, 0.202 );
+				const container = document.createElement( 'div' );
+				document.body.appendChild( container );
+const camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.1, 1000 );
+camera.position.y = -4;
+	const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.domElement.id = 'cnv2';
 		renderer.setClearColor( 0x00000 );
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.append( renderer.domElement );
-      const listener = new THREE.AudioListener();
-camera.add( listener );
+		const listener = new THREE.AudioListener();
 
-// create a global audio source
-const sound = new THREE.Audio( listener );
+				const audio = new THREE.Audio( listener );
+				const file = './j/music_box2.mp3';
 
-// load a sound and set it as the Audio object's buffer
-const audioLoader = new THREE.AudioLoader();
-audioLoader.load( 'j/music_box2.mp3', function( buffer ) {
-	sound.setBuffer( buffer );
-	sound.setLoop( true );
-	sound.setVolume( 0.5 );
+				if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) {
 
-  sound.play();
+					const loader = new THREE.AudioLoader();
+					loader.load( file, function ( buffer ) {
 
-	
-console.log('sound');
-  
-})
-  
+						audio.setBuffer( buffer );
+						audio.play();
+
+					} );
+
+				} else {
+
+					const mediaElement = new Audio( file );
+					mediaElement.play();
+
+					audio.setMediaElementSource( mediaElement );
+
+				}
+
+
+				video = document.getElementById( 'video' );
+				video.play();
+				video.addEventListener( 'play', function () {
+
+					
+
+			
+
+	this.currentTime = 3;
+  	});
+
+			}
   </script>
-  <div class="main">
-  <canvas class="app4" id="cnv2"></canvas>
-   <canvas class="app4" id="app"></canvas>
-   <iframe id="ol"  title="logo-overlay" frameborder="0"  src="./ol.html"> </iframe> </div>
 
-
-<iframe id="iframe"  title="Musicbox" frameborder="0"  src="./index4.html"> </iframe> </div>
-</div>
+  <div class="app4">
     
+
+<video id="video" src="https://haawkeneuraltech.com/assets/3DGridCity.webm" autoplay mute loop></video>
+ <canvas id="app"></canvas>   
+	
+  <iframe id="ol"  title="logo" frameborder="0"  src="./ol.html"> </iframe> 
+
+</iframe>
+ </div>
+	  </div>
+	  </div>
 
   </body>
 </html>
