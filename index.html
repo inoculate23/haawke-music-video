@@ -70,15 +70,7 @@ margin-bottom:40%;
   </head>
   <body>
 
-  <script type="importmap">
-            {
-              "imports": {
-                "three": "https://unpkg.com/three@0.163.0/build/three.module.js", 
-                "three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm/",
-                "three/nodes": "https://unpkg.com/three@0.163.0/examples/jsm/nodes/Nodes.js"
-             }
-            }
-  </script>
+
      <script type="module" crossorigin src="./j/assets/main-2f8b6886.js"></script>
    
     
@@ -88,12 +80,12 @@ margin-bottom:40%;
 import * as THREE from 'three';
 
 	
-import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, viewportTopLeft, color } from 'three/nodes';
+import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, viewportTopLeft, color } from 'https://unpkg.com/three@0.163.0/examples/jsm/nodes/Nodes.js';
 
-			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+			import { GUI } from 'https://unpkg.com/three@0.163.0/examples/jsm/libs/lil-gui.module.min.js';
 
-			import WebGPURenderer from 'three/addons/renderers/webgpu/WebGPURenderer.js';
-			import StorageInstancedBufferAttribute from 'three/addons/renderers/common/StorageInstancedBufferAttribute.js';
+			import WebGPURenderer from 'https://unpkg.com/three@0.163.0/examples/jsm/renderers/webgpu/WebGPURenderer.js';
+			import StorageInstancedBufferAttribute from 'https://unpkg.com/three@0.163.0/examples/jsm/renderers/common/StorageInstancedBufferAttribute.js';
 
 			
 			let computeNode;
