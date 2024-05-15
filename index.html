@@ -176,7 +176,7 @@ const startButton2 = document.getElementById( 'startButton' );
 		const listener = new THREE.AudioListener();
 
 				const audio = new THREE.Audio( listener );
-				const file = './j/music_box2.mp3';
+				const file = 'music_box2.mp3';
 
 				if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) {
 
@@ -197,119 +197,37 @@ const startButton2 = document.getElementById( 'startButton' );
 
 				}
 
-		
+		let cube_count;
 
-		const positionBaseAttribute = mesh.geometry.attributes.position;
-					const normalBaseAttribute = mesh.geometry.attributes.normal;
+			const meshes = [],
+				materials = [],
 
-					// replace geometry attributes for storage buffer attributes
+				xgrid = 20,
+				ygrid = 10;
 
-					const positionStorageBufferAttribute = new StorageBufferAttribute( positionBaseAttribute.count, 4 );
-					const normalStorageBufferAttribute = new StorageBufferAttribute( normalBaseAttribute.count, 4 );
+			const startButton = document.getElementById( 'startButton' );
+			startButton.addEventListener( 'click', function () {
 
-					mesh.geometry.setAttribute( 'position', positionStorageBufferAttribute );
-					mesh.geometry.setAttribute( 'normal', normalStorageBufferAttribute );
+				init();
 
-					// compute shader
+			} );
 
-					const computeFn = tslFn( () => {
-
-						const positionAttribute = storage( positionBaseAttribute, 'vec3', positionBaseAttribute.count );
-						const normalAttribute = storage( normalBaseAttribute, 'vec3', normalBaseAttribute.count );
-
-						const positionStorageAttribute = storage( positionStorageBufferAttribute, 'vec4', positionStorageBufferAttribute.count );
-						const normalStorageAttribute = storage( normalStorageBufferAttribute, 'vec4', normalStorageBufferAttribute.count );
-
-						const time = timerLocal( 1 );
-						const scale = 0.3;
-
-						//
-
-						const position = vec3( positionAttribute.element( instanceIndex ) );
-						const normal = vec3( normalAttribute.element( instanceIndex ) );
-
-						const theta = sin( time.add( position.y ) ).mul( scale );
-
-						const c = cos( theta );
-						const s = sin( theta );
-
-						const m = mat3(
-							c, 0, s,
-							0, 1, 0,
-							s.negate(), 0, c
-						);
-
-						const transformed = position.mul( m );
-						const transformedNormal = normal.mul( m );
-
-						positionStorageAttribute.element( instanceIndex ).assign( transformed );
-						normalStorageAttribute.element( instanceIndex ).assign( transformedNormal );
-
-					} );
-
-					computeUpdate = computeFn().compute( positionBaseAttribute.count );
-
-				} );
-
-				// renderer
-
-				renderer = new WebGPURenderer( { antialias: true } );
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.setAnimationLoop( animate );
-				document.body.appendChild( renderer.domElement );
-
-				const controls = new OrbitControls( camera, renderer.domElement );
-				controls.minDistance = .7;
-				controls.maxDistance = 2;
-
-				window.addEventListener( 'resize', onWindowResize );
-
-			}
-
-			function onWindowResize() {
-
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-
-				renderer.setSize( window.innerWidth, window.innerHeight );
-
-			}
-
-			async function animate() {
-
-				if ( computeUpdate ) await renderer.computeAsync( computeUpdate );
-
-				renderer.render( scene, camera );
-
-				const container = document.createElement( 'div' );
-				document.body.appendChild( container );
-
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.05, 30 );
-                                camera.position.y = -4;
-
-				// nodes
-
-				analyserTexture = new THREE.DataTexture( analyserBuffer, analyserBuffer.length, 1, THREE.RedFormat );
-
-				const spectrum = texture( analyserTexture, viewportTopLeft.x ).x.mul( viewportTopLeft.y );
-				const backgroundNode = color( 0x0000FF ).mul( spectrum );
-
-
-				// scene
-
-				scene = new THREE.Scene();
-				scene.backgroundNode = backgroundNode;
-
-
+			function init() {
 
 				const overlay = document.getElementById( 'overlay' );
 				overlay.remove();
 
-				
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
 
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.z = 500;
 
-				// renderer
+				scene = new THREE.Scene();
+
+				const light = new THREE.DirectionalLight( 0xffffff, 7 );
+				light.position.set( 0.5, 1, 1 ).normalize();
+				scene.add( light );
 
 				renderer = new WebGPURenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
@@ -317,63 +235,72 @@ const startButton2 = document.getElementById( 'startButton' );
 				renderer.setAnimationLoop( render );
 				container.appendChild( renderer.domElement );
 
-				window.addEventListener( 'resize', onWindowResize );
+				video = document.getElementById( 'video' );
+				video.play();
+				video.addEventListener( 'play', function () {
 
+					this.currentTime = 3;
 
+				} );
 
-					const overlay = document.getElementById( 'overlay' );
-					if ( overlay !== null ) overlay.remove();
+				texture = new THREE.VideoTexture( video );
 
-					playAudioBuffer();
+				//
 
-				};
+				let i, j, ox, oy, geometry;
 
-			}
+				const ux = 1 / xgrid;
+				const uy = 1 / ygrid;
 
-			function onWindowResize() {
+				const xsize = 480 / xgrid;
+				const ysize = 204 / ygrid;
 
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
+				const parameters = { color: 0xffffff, map: texture };
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				cube_count = 0;
 
-			}
+				for ( i = 0; i < xgrid; i ++ ) {
 
-			function render() {
+					for ( j = 0; j < ygrid; j ++ ) {
 
-				if ( currentAnalyser ) {
+						ox = i;
+						oy = j;
 
-					currentAnalyser.getByteFrequencyData( analyserBuffer );
+						geometry = new THREE.BoxGeometry( xsize, ysize, xsize );
 
-					analyserTexture.needsUpdate = true;
+						change_uvs( geometry, ux, uy, ox, oy );
+
+						materials[ cube_count ] = new THREE.MeshPhongMaterial( parameters );
+
+						material = materials[ cube_count ];
+
+						material.hue = i / xgrid;
+						material.saturation = 1 - j / ygrid;
+
+						material.color.setHSL( material.hue, material.saturation, 0.5 );
+
+						mesh = new THREE.Mesh( geometry, material );
+
+						mesh.position.x = ( i - xgrid / 2 ) * xsize;
+						mesh.position.y = ( j - ygrid / 2 ) * ysize;
+						mesh.position.z = 0;
+
+						mesh.scale.x = mesh.scale.y = mesh.scale.z = 1;
+
+						scene.add( mesh );
+
+						mesh.dx = 0.001 * ( 0.5 - Math.random() );
+						mesh.dy = 0.001 * ( 0.5 - Math.random() );
+
+						meshes[ cube_count ] = mesh;
+
+						cube_count += 1;
+
+					}
 
 				}
 
-				renderer.render( scene, camera );
-
-			}
-	//	 let video = document.getElementById( 'video' );
-		//		video.play();
-		//		video.addEventListener( 'play', function () {
-
-					
-
-			
-
-	this.currentTime = 3;
-  	});
-
-			// postprocessing
-
-				const renderPass = new RenderPass( scene, camera );
-				const bloomPass = new BloomPass( 1.3 );
-				const outputPass = new OutputPass();
-
-				composer = new EffectComposer( renderer );
-
-				composer.addPass( renderPass );
-				composer.addPass( bloomPass );
-				composer.addPass( outputPass );
+				document.addEventListener( 'mousemove', onDocumentMouseMove );
 
 				//
 
@@ -390,7 +317,6 @@ const startButton2 = document.getElementById( 'startButton' );
 				camera.updateProjectionMatrix();
 
 				renderer.setSize( window.innerWidth, window.innerHeight );
-				composer.setSize( window.innerWidth, window.innerHeight );
 
 			}
 
@@ -416,14 +342,6 @@ const startButton2 = document.getElementById( 'startButton' );
 			}
 
 			//
-
-			function animate() {
-
-				requestAnimationFrame( animate );
-
-				render();
-
-			}
 
 			let h, counter = 1;
 
@@ -477,10 +395,10 @@ const startButton2 = document.getElementById( 'startButton' );
 
 				counter ++;
 
-				renderer.clear();
-				composer.render();
+				renderer.render( scene, camera );
 
 			}
+
 
   </script>
 
