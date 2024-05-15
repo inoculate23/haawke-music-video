@@ -258,19 +258,7 @@ const startButton2 = document.getElementById( 'startButton' );
 
 			
 
-			function onWindowResize() {
-
-				windowHalfX = window.innerWidth / 2;
-				windowHalfY = window.innerHeight / 2;
-
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-
-				renderer.setSize( window.innerWidth, window.innerHeight );
-
-			}
-
-			
+		
 
 				
 
@@ -327,9 +315,9 @@ const startButton2 = document.getElementById( 'startButton' );
 			
 
 				const controls = new OrbitControls( camera, renderer.domElement );
-				controls.minDistance = 2;
+				controls.minDistance = 1;
 				controls.maxDistance = 5;
-				controls.target.set( 0, - 0.1, - 0.2 );
+				controls.target.set( 0, - 0.1,  0.2 );
 				controls.update();
 				controls.addEventListener( 'change', render ); // use if there is no animation loop
 
