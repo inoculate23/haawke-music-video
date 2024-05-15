@@ -108,7 +108,7 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 			let waveBuffer, sampleRate;
 			let waveGPUBuffer;
 			let currentAudio, currentAnalyser;
-			const analyserBuffer = new Uint8Array( 1024 );
+			const analyserBuffer = new Uint8Array( 2048 );
 			let analyserTexture;
 
 
@@ -188,9 +188,9 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 
 				// params
 
-				const pitch = uniform( 1.5 );
-				const delayVolume = uniform( .2 );
-				const delayOffset = uniform( .55 );
+				const pitch = uniform( 1.0 );
+				const delayVolume = uniform( .1 );
+				const delayOffset = uniform( .1 );
 
 
 				// compute (shader-node)
