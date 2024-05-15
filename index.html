@@ -99,7 +99,7 @@ import * as THREE from './j/three.module.js';
 				const overlay = document.getElementById( 'overlay' );
 				overlay.remove();
 
-				container = document.createElement( 'div' );
+				const container = document.createElement( 'div' );
 				document.body.appendChild( container );
 const camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.1, 1000 );
 camera.position.y = -4;
