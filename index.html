@@ -180,7 +180,7 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 
 				// audio buffer
 
-				const soundBuffer = await fetch( 'The_Music_Box.mp3' ).then( res => res.arrayBuffer() );
+				const soundBuffer = await fetch( './The_Music_Box.mp3' ).then( res => res.arrayBuffer() );
 				const audioContext = new AudioContext();
 
 				const audioBuffer = await audioContext.decodeAudioData( soundBuffer );
@@ -353,7 +353,7 @@ camera.position.y = -4;
 
 
  <canvas id="app"></canvas>   
-	
+	<video id="video" autoplay mute loop src="./assets/Cube.webm"></video>video
   <iframe id="ol"  title="logo" frameborder="0"  src="./ol.html"> </iframe> 
  </div>
 		</script>
