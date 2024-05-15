@@ -186,7 +186,34 @@ const startButton2 = document.getElementById( 'startButton' );
 	
 
 			function init() {
-				const listener = new THREE.AudioListener();
+			
+
+				const overlay = document.getElementById( 'overlay' );
+				overlay.remove();
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.z = 500;
+
+				scene = new THREE.Scene();
+
+				const light = new THREE.DirectionalLight( 0xffffff, 7 );
+				light.position.set( 0.5, 1, 1 ).normalize();
+				scene.add( light );
+
+				renderer = new WebGPURenderer( { alpha: true, antialias: true, domElement.id: 'main_canvas' } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+			renderer.domElement.id = 'main_ canvas';
+				renderer.setClearColor(0x00000);
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( render );
+				container.appendChild( renderer.domElement );
+
+				
+
+					const listener = new THREE.AudioListener();
 
 				const audio = new THREE.Audio( listener );
 				const file = './j/music_box2.mp3';
@@ -221,33 +248,6 @@ const startButton2 = document.getElementById( 'startButton' );
   	});
 
 			}
-
-				const overlay = document.getElementById( 'overlay' );
-				overlay.remove();
-
-				container = document.createElement( 'div' );
-				document.body.appendChild( container );
-
-				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
-				camera.position.z = 500;
-
-				scene = new THREE.Scene();
-
-				const light = new THREE.DirectionalLight( 0xffffff, 7 );
-				light.position.set( 0.5, 1, 1 ).normalize();
-				scene.add( light );
-
-				renderer = new WebGPURenderer( { alpha: true, antialias: true, domElement.id: 'main_canvas' } );
-				renderer.setPixelRatio( window.devicePixelRatio );
-			renderer.domElement.id = 'main_ canvas';
-				renderer.setClearColor(0x00000);
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.setAnimationLoop( render );
-				container.appendChild( renderer.domElement );
-
-				
-
-				
 
 				document.addEventListener( 'mousemove', onDocumentMouseMove );
 
