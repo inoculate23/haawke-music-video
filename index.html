@@ -123,9 +123,9 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 				document.body.appendChild( container );
 const camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.1, 1000 );
 camera.position.y = -4;
-	const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+	const renderer = new THREE.WebGLRenderer({ alpha: false, antialias: true });
 renderer.domElement.id = 'cnv2';
-		renderer.setClearColor( 0x00000 );
+		//renderer.setClearColor( 0x00000 );
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.append( renderer.domElement );
 		
