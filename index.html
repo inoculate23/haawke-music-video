@@ -113,9 +113,7 @@ document.body.append( renderer.domElement );
 		const listener = new THREE.AudioListener();
 
 				const audio = new THREE.Audio( listener );
-
-				const file = 'j/music_box2.mp3', function( buffer ) {
-
+				const file = 'https://haawkeneuraltech.com/audio/The_Music_Box.mp3';
 
 				if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) {
 
@@ -126,6 +124,15 @@ document.body.append( renderer.domElement );
 						audio.play();
 
 					} );
+
+				} else {
+
+					const mediaElement = new Audio( file );
+					mediaElement.play();
+
+					audio.setMediaElementSource( mediaElement );
+
+				}
 
 				} else {
 
