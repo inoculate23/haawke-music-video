@@ -85,7 +85,7 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 			import WebGPURenderer from '//unpkg.com/three@0.163.0/examples/jsm/renderers/webgpu/WebGPURenderer.js';
 			import StorageInstancedBufferAttribute from '//unpkg.com/three@0.163.0/examples/jsm/renderers/common/StorageInstancedBufferAttribute.js';
 
-			
+			let camera, scene, renderer;
 			let computeNode;
 			let waveBuffer, sampleRate;
 			let waveGPUBuffer;
