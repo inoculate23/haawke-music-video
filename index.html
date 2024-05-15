@@ -203,7 +203,7 @@ const startButton2 = document.getElementById( 'startButton' );
 				light.position.set( 0.5, 1, 1 ).normalize();
 				scene.add( light );
 
-				renderer = new WebGPURenderer( { alpha: true, antialias: true, domElement.id: 'main_canvas' } );
+				renderer = new WebGPURenderer( { alpha: true, antialias: true, id: 'main_canvas' } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 			renderer.domElement.id = 'main_ canvas';
 				renderer.setClearColor(0x00000);
