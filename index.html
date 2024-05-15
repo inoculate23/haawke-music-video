@@ -10,20 +10,36 @@
       <link rel="modulepreload" crossorigin="" href="./j/assets/math-utils-1c6b45c8.js">  
 	 <script type="module" crossorigin src="./j/three.module.js"></script>	 
 	  <link rel="stylesheet" href="./j/assets/math-utils-d0e09dec.css">  
-  <style>
+]
+ <style>
       html, body {
-  overflow:hidden;
+overflow:hidden;
         background-color: rgb(8, 8, 8);
   }
-
+ #overlay {
+    height:100%;
+    width:100%;
+    margin:0px;
+    position: absolute;
+    z-index: 132;
+	 opacity:.7;
+  }
 
   #ol {
     height:100%;
     width:100%;
     margin:0px;
     position: absolute;
-    z-index: 12;
+    z-index: 19;
   }
+	  #main_canvas {
+  height:100vh;
+    width:100%;
+    margin:0px;
+    position: absolute;
+    z-index: 16;
+    
+}
 #cnv2 {
   height:100vh;
     width:100%;
@@ -62,14 +78,42 @@ backdrop-filter: hue-rotate(60deg);
 		  margin-left:40%;
 		  margin-top:40%;
 margin-bottom:40%;
-		  position:absolute:
+		  position:absolute;
 		  z-index:99;
 		  color:black;
+	  }
+	   #cover {
+	  width: 1620px;
+		  margin-right:3%;
+		  margin-left:3%;
+		  margin-top:3%;
+margin-bottom:10%;
+		  position:absolute;
+		  z-index:99;
+		    opacity:.7;
+		 
 	  }
 	  #container {
 	flex: auto;
 	  width:100%;
 	  }
+
+
+  </style>
+  </head>
+  <body>
+  <body>
+	  <div id="container">
+	
+	<div id="overlay">
+		<div>
+			<img id="cover" src="./isabelle-cassuto-musicbox-render-closeup02-black.jpeg" />
+		
+			<button id="startButton">Play</button>
+		</div>
+			</div>
+
+ <script type="importmap">
   </style>
   </head>
   <body><div id="container">
