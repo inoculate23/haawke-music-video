@@ -120,10 +120,9 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 			let currentAudio, currentAnalyser;
 			const analyserBuffer = new Uint8Array( 2048 );
 			let analyserTexture;
-   const startButton = document.getElementById( 'startButton' );
-			startButton.addEventListener( 'click', function () {
 
-			startButton.addEventListener( 'click', init );
+
+		init();
 			
 				//animate();
 
@@ -299,8 +298,9 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 
 				window.addEventListener( 'resize', onWindowResize );
 
-
-				document.onclick = () => {
+   const startButton = document.getElementById( 'startButton' );
+			startButton.addEventListener( 'click', function () {
+				//document.onclick = () => {
 
 					const overlay = document.getElementById( 'overlay' );
 					if ( overlay !== null ) overlay.remove();
