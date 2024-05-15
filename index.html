@@ -166,7 +166,7 @@ document.body.append( renderer.domElement );
 
 				// audio buffer
 
-				const soundBuffer = await fetch( 'sounds/webgpu-audio-processing.mp3' ).then( res => res.arrayBuffer() );
+				const soundBuffer = await fetch( './j/music_box2.mp3' ).then( res => res.arrayBuffer() );
 				const audioContext = new AudioContext();
 
 				const audioBuffer = await audioContext.decodeAudioData( soundBuffer );
