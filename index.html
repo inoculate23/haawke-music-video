@@ -124,18 +124,13 @@ margin-bottom:10%;
 
 
 	import * as THREE from "three";
-import { tslFn, uniform, storageObject, instanceIndex, float, viewportTopLeft, color, vec3, cos, sin, mat3, storage, timerLocal  } from 'three/nodes';
+import { tslFn, uniform, storageObject, instanceIndex, float, viewportTopLeft, color, vec3, cos, sin, mat3, storage, timerLocal, pass, rangeFog  } from 'three/nodes';
 			import { EffectComposer } from 'https://unpkg.com/three@0.164.1/examples/jsm/postprocessing/EffectComposer.js';
-			import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-			import { BloomPass } from 'three/addons/postprocessing/BloomPass.js';
-			import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+			import { RenderPass } from 'https://unpkg.com/three@0.164.1/examples/jsm/postprocessing/RenderPass.js';
+			import { BloomPass } from 'https://unpkg.com/three@0.164.1/examples/jsm/postprocessing/.js';
+			import { OutputPass } from 'https://unpkg.com/three@0.164.1/examples/jsm/postprocessing/OutputPass.js';
 
-			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-		
-import { pass, rangeFog } from 'three/nodes';
-
-			import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 			import StorageBufferAttribute from 'three/addons/renderers/common/StorageBufferAttribute.js';
