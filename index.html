@@ -198,6 +198,54 @@ const startButton2 = document.getElementById( 'startButton' );
 			} );
 
 			function init() {
+"use strict";
+{
+    // Make the default LUME 3D elements available with their default names.
+    LUME.useDefaultNames();
+    const minCamXRotation = -11;
+    const maxCamXRotation = 90;
+    // Add some interaction: drag to rotate the view:
+    scene.addEventListener("pointerdown", () => {
+        // Stop rotation if any.
+        controls.rotation = () => false;
+        let deltaX = 0;
+        let deltaY = 0;
+        const onMove = (event) => {
+            deltaX = event.movementY * 0.2;
+            xRotator.rotation.x = clamp(xRotator.rotation.x + deltaX, minCamXRotation, maxCamXRotation);
+            deltaY = -event.movementX * 0.2;
+            controls.rotation.y += deltaY;
+        };
+        scene.addEventListener("pointermove", onMove);
+        scene.addEventListener("pointerup", () => {
+            // stop dragging
+            scene.removeEventListener("pointermove", onMove);
+            if (deltaX === 0 && deltaY === 0)
+                return;
+            // slow the rotation down based on former drag speed
+            xRotator.rotation = (x, y, z) => {
+                deltaX = deltaX * 0.95;
+                // stop rotation once the delta is small enough that we
+                // no longer notice the rotation.
+                if (Math.abs(deltaX) < 0.01)
+                    return false;
+                return [clamp(x + deltaX, minCamXRotation, maxCamXRotation), y, z];
+            };
+            controls.rotation = (x, y, z) => {
+                deltaY = deltaY * 0.95;
+                // stop rotation once the delta is small enough that we
+                // no longer notice the rotation.
+                if (Math.abs(deltaY) < 0.01)
+                    return false;
+                return [x, y + deltaY, z];
+            };
+        }, { once: true });
+    });
+    function clamp(n, min, max) {
+        return Math.max(Math.min(n, max), min);
+    }
+    lights.rotation = (x, y, z) => [x, y + 0.2, z];
+}
 
 				const overlay = document.getElementById( 'overlay' );
 				overlay.remove();
