@@ -91,6 +91,23 @@ import * as THREE from './j/three.module.js';
 
 				init();
 				animate();
+				      const listener = new THREE.AudioListener();
+camera.add( listener );
+
+// create a global audio source
+const sound = new THREE.Audio( listener );
+
+// load a sound and set it as the Audio object's buffer
+const audioLoader = new THREE.AudioLoader();
+audioLoader.load( 'j/music_box2.mp3', function( buffer ) {
+	sound.setBuffer( buffer );
+	sound.setLoop( true );
+	sound.setVolume( 0.5 );
+
+  sound.play();
+
+	
+console.log('sound');
 
 			} );
 
@@ -116,23 +133,7 @@ document.body.append( renderer.domElement );
 					
 
 			
-      const listener = new THREE.AudioListener();
-camera.add( listener );
 
-// create a global audio source
-const sound = new THREE.Audio( listener );
-
-// load a sound and set it as the Audio object's buffer
-const audioLoader = new THREE.AudioLoader();
-audioLoader.load( 'j/music_box2.mp3', function( buffer ) {
-	sound.setBuffer( buffer );
-	sound.setLoop( true );
-	sound.setVolume( 0.5 );
-
-  sound.play();
-
-	
-console.log('sound');
 	this.currentTime = 3;
   	});
 })
