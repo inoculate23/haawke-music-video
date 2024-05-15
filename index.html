@@ -88,26 +88,11 @@ import * as THREE from './j/three.module.js';
 
 	    const startButton = document.getElementById( 'startButton' );
 			startButton.addEventListener( 'click', function () {
-
+const startButton2 = document.getElementById( 'startButton' );
+			startButton.addEventListener( 'click', init );
 				init();
 				animate();
-				      const listener = new THREE.AudioListener();
-camera.add( listener );
 
-// create a global audio source
-const sound = new THREE.Audio( listener );
-
-// load a sound and set it as the Audio object's buffer
-const audioLoader = new THREE.AudioLoader();
-audioLoader.load( 'j/music_box2.mp3', function( buffer ) {
-	sound.setBuffer( buffer );
-	sound.setLoop( true );
-	sound.setVolume( 0.5 );
-
-  sound.play();
-
-	
-console.log('sound');
 
 			} );
 
@@ -125,6 +110,31 @@ renderer.domElement.id = 'cnv2';
 		renderer.setClearColor( 0x00000 );
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.append( renderer.domElement );
+		const listener = new THREE.AudioListener();
+
+				const audio = new THREE.Audio( listener );
+
+				const file = 'j/music_box2.mp3', function( buffer ) {
+
+
+				if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) {
+
+					const loader = new THREE.AudioLoader();
+					loader.load( file, function ( buffer ) {
+
+						audio.setBuffer( buffer );
+						audio.play();
+
+					} );
+
+				} else {
+
+					const mediaElement = new Audio( file );
+					mediaElement.play();
+
+					audio.setMediaElementSource( mediaElement );
+
+				}
 
 				video = document.getElementById( 'video' );
 				video.play();
