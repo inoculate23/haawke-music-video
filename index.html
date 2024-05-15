@@ -98,7 +98,8 @@ margin-bottom:10%;
   </style>
   </head>
   <body>
-  <body><div id="container">
+  <body>
+	  <div id="container">
 	
 	<div id="overlay">
 		<div>
@@ -172,8 +173,8 @@ let video, texture, material, mesh;
 				const overlay = document.getElementById( 'overlay' );
 				overlay.remove();
 
-				container = document.createElement( 'div' );
-				document.body.appendChild( container );
+				container = document.getElementById( 'container' );
+				//document.body.appendChild( container );
 
 				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
 				camera.position.z = 500;
