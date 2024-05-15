@@ -3,27 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>haawke-the music box</title>
-
-
-
-
-
+<title>haawke-the music box</title>
+	     <script type="module" crossorigin src="./j/assets/main-2f8b6886.js"></script>
+   
+    
+      <link rel="modulepreload" crossorigin="" href="./j/assets/math-utils-1c6b45c8.js">  
+	 <script type="module" crossorigin src="./j/three.module.js"></script>	 
+	  <link rel="stylesheet" href="./j/assets/math-utils-d0e09dec.css">  
   <style>
       html, body {
-overflow:hidden;
+  overflow:hidden;
         background-color: rgb(8, 8, 8);
   }
 
-#overlay {
-	    height:100%;
-    width:100vh;
-    margin:0px;
-    position: absolute;
-    z-index: 922;
-	background-img:url('isabelle-cassuto-musicbox-render-closeup02-black.jpeg');
-	
-}
+
   #ol {
     height:100%;
     width:100%;
@@ -77,15 +70,25 @@ margin-bottom:40%;
 	flex: auto;
 	  width:100%;
 	  }
+
+
   </style>
   </head>
   <body>
+  <body><div id="container">
+	
+	<div id="overlay">
+			<button id="startButton">Play</button>
+		</div>
+		
+
 
   <script type="importmap">
         {
             "imports": {
                 "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.164.1/three.module.js",
                 "OrbitControls": "https://unpkg.com/three@0.138.0/examples/jsm/controls/OrbitControls.js"
+	      "three/nodes": "https://unpkg.com/three@0.163.0/examples/jsm/nodes/Nodes.js"
             }
         }
     </script>
@@ -110,9 +113,18 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 			let currentAudio, currentAnalyser;
 			const analyserBuffer = new Uint8Array( 2048 );
 			let analyserTexture;
+   const startButton = document.getElementById( 'startButton' );
+			startButton.addEventListener( 'click', function () {
+const startButton2 = document.getElementById( 'startButton' );
+			startButton.addEventListener( 'click', init );
+				init();
+				animate();
 
 
-			init();
+			} );
+
+
+		
 
 			async function playAudioBuffer() {
 
@@ -262,6 +274,16 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 				scene = new THREE.Scene();
 				scene.backgroundNode = backgroundNode;
 
+
+
+				const overlay = document.getElementById( 'overlay' );
+				overlay.remove();
+
+				const container = document.createElement( 'div' );
+				document.body.appendChild( container );
+const camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.1, 1000 );
+camera.position.y = -4;
+
 				// renderer
 
 				renderer = new WebGPURenderer( { antialias: true } );
@@ -306,7 +328,28 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 				renderer.render( scene, camera );
 
 			}
+		video = document.getElementById( 'video' );
+				video.play();
+				video.addEventListener( 'play', function () {
 
+					
+
+			
+
+	this.currentTime = 3;
+  	});
+
+			}
+  </script>
+
+  <div class="app4">
+    
+
+
+ <canvas id="app"></canvas>   
+	
+  <iframe id="ol"  title="logo" frameborder="0"  src="./ol.html"> </iframe> 
+ </div>
 		</script>
 
 
