@@ -276,6 +276,21 @@ const startButton2 = document.getElementById( 'startButton' );
 
 			let h, counter = 1;
 
+	
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				render();
+
+			}
+
+			//
+
 			function render() {
 
 				const time = Date.now() * 0.00005;
@@ -325,24 +340,9 @@ const startButton2 = document.getElementById( 'startButton' );
 
 			
 
-			function onWindowResize() {
-
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-
-				renderer.setSize( window.innerWidth, window.innerHeight );
-
-				render();
-
-			}
-
-			//
-
-			function render() {
-
 				postProcessing.renderAsync();
 
-			}
+			
 				counter ++;
 
 				renderer.render( scene, camera );
