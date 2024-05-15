@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>haawke-the music box</title>
 	     <script type="module" crossorigin src="./j/assets/main-2f8b6886.js"></script>
-   
+       
+    <script src="https://gistcdn.githack.com/MAKIO135/73e5cb2c456084a9c356f9c3f89f8803/raw/3f4d08bf3c88c326702eff34bb621019b1ae5581/gfont.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.5/dat.gui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.2/p5.js"></script>
+
     
       <link rel="modulepreload" crossorigin="" href="./j/assets/math-utils-1c6b45c8.js">  
 	 <script type="module" crossorigin src="./j/three.module.js"></script>	 
@@ -199,11 +204,184 @@ document.body.append( renderer.domElement );
 
 			}
   </script>
+<script>
+	// Inspired by Yeohyun Ahn and Viviana Cordova: Type + Code: Processing For Designers 
+// https://issuu.com/jpagecorrigan/docs/type-code_yeohyun-ahn
 
+console.clear();
+var clog = console.log;
+clog( googleFonts );
+
+var BLUE, RED;
+
+var params = {
+    fontIndex: 5,
+    font: googleFonts[ 5 ].name,
+    fontStyle: googleFonts[ 5 ].styles[ 0 ],
+    text: 'Haawke',
+    textSize: 200,
+    textSizeRange: [ 18, 300 ],
+    number: 10,
+    numberRange: [ 2, 36 ],
+    distance: 100,
+    distanceRange: [ -100, 100 ],
+    angle: 320,
+    angleRange: [ 0, 360  ],
+    globalAngle: 50,
+    globalAngleRange: [ 0, 360  ],
+    random: true,
+    mirror: true
+};
+
+var animParams = {
+    textSize: params.textSize,
+    number: params.number,
+    distance: params.distance,
+    angle: params.angle,
+    globalAngle: params.globalAngle
+};
+
+
+var font;
+var gui, fontController, fontStyleController;
+
+function setup() {
+    createCanvas( windowWidth, windowHeight );
+    font = loadFont( googleFontsBaseUrl + googleFonts[ params.fontIndex ].files[ 0 ].url, useFont );
+    
+    BLUE = color( '#000002' );
+    RED = color( '#b2b2b2' );
+
+    gui = new dat.GUI();
+    gui.add( params, 'random' );
+    gui.add( params, 'mirror' );
+    gui.add( params, 'text' ).listen();
+    gui.add( params, 'textSize', params.textSizeRange[ 0 ], params.textSizeRange[ 1 ] ).step( 1 ).listen();
+    gui.add( params, 'number', params.numberRange[ 0 ], params.numberRange[ 1 ] ).step( 1 ).listen();
+    gui.add( params, 'distance', params.distanceRange[ 0 ], params.distanceRange[ 1 ] ).step( 1 ).listen();
+    gui.add( params, 'angle', params.angleRange[ 0 ], params.angleRange[ 1 ] ).step( 1 ).listen();
+    gui.add( params, 'globalAngle', params.globalAngleRange[ 0 ], params.globalAngleRange[ 1 ] ).step( 1 ).listen();
+    for( var i in gui.__controllers ) {
+        gui.__controllers[ i ].onChange( animate );
+    }
+    gui.close();
+    fontController = gui.add( params, 'font', googleFonts.map( font => font.name ) ).listen();
+    fontStyleController = gui.add( params, 'fontStyle', googleFonts[ params.fontIndex ].styles ).listen();
+    
+    fontController.onChange( fontControllerUpdate );
+    
+    fontStyleController.onChange( fontStyleControllerUpdate );
+    
+    noStroke();
+    fill( RED.levels[ 0 ], RED.levels[ 1 ],  RED.levels[ 2 ], 59 );
+    textAlign( CENTER, CENTER );
+}
+
+function draw() {
+    background( BLUE );
+    
+    if( params.random && frameCount % 200 == 0 ){
+        randomize();
+    }
+    
+    textSize( animParams.textSize );
+    translate( width/2, height/2 );
+    push();
+    rotate( radians( animParams.globalAngle ) );
+    
+    for( var i = 0; i < animParams.number; i ++ ){
+        push();
+        rotate( i * TAU / animParams.number );
+        translate( 0, - map( animParams.distance, 0, 100, 0, height / 2 - animParams.textSize / 2 ) );
+        rotate( radians( animParams.angle ) );
+        text( params.text, 0, 0 );
+        pop();
+    }
+    pop();
+    
+    if( params.mirror ) {
+        push();
+        scale( -1, 1 );
+        rotate( radians( animParams.globalAngle ) );
+
+        for( var i = 0; i < animParams.number; i ++ ){
+            push();
+            rotate( i * TAU / animParams.number );
+            translate( 0, - map( animParams.distance, -30, 500, 40, height / 2 - animParams.textSize / 2 ) );
+            rotate( radians( animParams.angle ) );
+            text( params.text, 0, 0 );
+            pop();
+        }
+        pop();
+    }
+}
+
+function animate( value, _t ){
+    var time = _t || 0.5;
+    TweenMax.to( animParams, time, {
+        textSize: params.textSize,
+        number: params.number,
+        distance: params.distance,
+        angle: params.angle,
+        globalAngle: params.globalAngle
+    } );
+}
+
+function randomize(){
+    params.fontIndex = ~~ random( googleFonts.length ) 
+    params.font = googleFonts[ params.fontIndex ].name;
+    fontControllerUpdate( params.font );
+    //animParams.text = params.text = String.fromCharCode( 65 + ~~random( 26 ) );
+    params.textSize = ~~ random( params.textSizeRange[ 0 ], params.textSizeRange[ 1 ] );
+    params.number = ~~ random( params.numberRange[ 0 ], params.numberRange[ 1 ] );
+    params.distance = ~~ random( params.distanceRange[ 0 ], params.distanceRange[ 1 ] );
+    params.angle = ~~ random( params.angleRange[ 0 ], params.angleRange[ 1 ] );
+    params.globalAngle = ~~ random( params.globalAngleRange[ 0 ], params.globalAngleRange[ 1 ] );
+    animate( 0, 4 );
+}
+
+function useFont(){
+    textFont( font );
+}
+
+function fontStyleControllerUpdate( value ){
+    for( let i = 0; i < googleFonts[ params.fontIndex ].files.length; i ++ ){
+        if( googleFonts[ params.fontIndex ].files[ i ].style == value ){
+            font = loadFont( googleFontsBaseUrl + googleFonts[ params.fontIndex ].files[ i ].url, useFont );
+            break;
+        }
+    }
+}
+
+function fontControllerUpdate( value ){
+    for( let i = 0; i < googleFonts.length; i++ ){
+        if( googleFonts[ i ].name == value ){
+            params.fontIndex = i;
+            break;
+        }
+    }
+    
+    for( let i = 0; i < googleFonts[ params.fontIndex ].files.length; i ++ ){
+        if( googleFonts[ params.fontIndex ].files[ i ].style == googleFonts[ params.fontIndex ].styles[ 0 ] ){
+            font = loadFont( googleFontsBaseUrl + googleFonts[ params.fontIndex ].files[ i ].url, useFont );
+            break;
+        }
+    }
+
+    fontStyleController.remove();
+    fontStyleController = gui.add( params, 'fontStyle', googleFonts[ params.fontIndex ].styles ).listen();
+    fontStyleController.onChange( fontStyleControllerUpdate );
+}
+
+function windowResized() {
+    resizeCanvas( windowWidth, windowHeight );
+}
+
+</script>
   <div class="app4">
     
 
-
+<video id="video" src="assets/
  <canvas id="app"></canvas>   
 	
   <iframe id="ol"  title="logo" frameborder="0"  src="./ol.html"> </iframe> 
