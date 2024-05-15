@@ -231,8 +231,9 @@ const startButton2 = document.getElementById( 'startButton' );
 				light.position.set( 0.5, 1, 1 ).normalize();
 				scene.add( light );
 
-				renderer = new WebGPURenderer( { antialias: true } );
+				renderer = new WebGPURenderer( { alpha: true, antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setClearColor(0x00000);
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				renderer.setAnimationLoop( render );
 				container.appendChild( renderer.domElement );
@@ -428,8 +429,8 @@ const startButton2 = document.getElementById( 'startButton' );
 
 						// model
 
-						const loader = new GLTFLoader().setPath( 'models/gltf/DamagedHelmet/glTF/' );
-						loader.load( 'DamagedHelmet.gltf', function ( gltf ) {
+						const loader = new GLTFLoader().setPath( 'https://haawkeneuraltech.com/images/sf_models/' );
+						loader.load( 'plexus.glb', function ( gltf ) {
 
 							scene.add( gltf.scene );
 
@@ -481,7 +482,7 @@ const startButton2 = document.getElementById( 'startButton' );
 
   <div class="app4">
     
-
+<video id="video" src="Cube.webm" autoplay mute loop></video>
 
  <canvas id="app"></canvas>   
   <iframe id="ol"  title="logo" frameborder="0"  src="./ol.html"> </iframe> 
