@@ -162,8 +162,8 @@ let video, texture, material, mesh;
 	    const startButton = document.getElementById( 'startButton' );
 			startButton.addEventListener( 'click', function () {
 const startButton2 = document.getElementById( 'startButton' );
-			startButton.addEventListener( 'click', init );
-				init();
+			startButton.addEventListener( 'click', function init() );
+				
 				animate();
 
 
@@ -207,20 +207,7 @@ const startButton2 = document.getElementById( 'startButton' );
 
 				}
 
-		let cube_count;
-
-			const meshes = [],
-				materials = [],
-
-				xgrid = 20,
-				ygrid = 10;
-
-			const startButton = document.getElementById( 'startButton' );
-			startButton.addEventListener( 'click', function () {
-
-				init();
-
-			} );
+	
 
 			function init() {
 
@@ -247,70 +234,9 @@ const startButton2 = document.getElementById( 'startButton' );
 				renderer.setAnimationLoop( render );
 				container.appendChild( renderer.domElement );
 
-				video = document.getElementById( 'video' );
-				video.play();
-				video.addEventListener( 'play', function () {
+				
 
-					this.currentTime = 3;
-
-				} );
-
-				texture = new THREE.VideoTexture( video );
-
-				//
-
-				let i, j, ox, oy, geometry;
-
-				const ux = 1 / xgrid;
-				const uy = 1 / ygrid;
-
-				const xsize = 480 / xgrid;
-				const ysize = 204 / ygrid;
-
-				const parameters = { color: 0xffffff, map: texture };
-
-				cube_count = 0;
-
-				for ( i = 0; i < xgrid; i ++ ) {
-
-					for ( j = 0; j < ygrid; j ++ ) {
-
-						ox = i;
-						oy = j;
-
-						geometry = new THREE.BoxGeometry( xsize, ysize, xsize );
-
-						change_uvs( geometry, ux, uy, ox, oy );
-
-						materials[ cube_count ] = new THREE.MeshPhongMaterial( parameters );
-
-						material = materials[ cube_count ];
-
-						material.hue = i / xgrid;
-						material.saturation = 1 - j / ygrid;
-
-						material.color.setHSL( material.hue, material.saturation, 0.5 );
-
-						mesh = new THREE.Mesh( geometry, material );
-
-						mesh.position.x = ( i - xgrid / 2 ) * xsize;
-						mesh.position.y = ( j - ygrid / 2 ) * ysize;
-						mesh.position.z = 0;
-
-						mesh.scale.x = mesh.scale.y = mesh.scale.z = 1;
-
-						scene.add( mesh );
-
-						mesh.dx = 0.001 * ( 0.5 - Math.random() );
-						mesh.dy = 0.001 * ( 0.5 - Math.random() );
-
-						meshes[ cube_count ] = mesh;
-
-						cube_count += 1;
-
-					}
-
-				}
+				
 
 				document.addEventListener( 'mousemove', onDocumentMouseMove );
 
@@ -332,14 +258,7 @@ const startButton2 = document.getElementById( 'startButton' );
 
 			}
 
-			function change_uvs( geometry, unitx, unity, offsetx, offsety ) {
-
-				const uvs = geometry.attributes.uv.array;
-
-				for ( let i = 0; i < uvs.length; i += 2 ) {
-
-					uvs[ i ] = ( uvs[ i ] + offsetx ) * unitx;
-					uvs[ i + 1 ] = ( uvs[ i + 1 ] + offsety ) * unity;
+			
 
 				}
 
@@ -425,23 +344,7 @@ const startButton2 = document.getElementById( 'startButton' );
 
 				postProcessing = new PostProcessing( renderer );
 				postProcessing.outputNode = compose;
-
-				//
-
-				new RGBELoader()
-					.setPath( 'textures/equirectangular/' )
-					.load( 'royal_esplanade_1k.hdr', function ( texture ) {
-
-						texture.mapping = THREE.EquirectangularReflectionMapping;
-
-						scene.environment = texture;
-
-						// model
-
-						const loader = new GLTFLoader().setPath( 'https://haawkeneuraltech.com/images/sf_models/' );
-						loader.load( 'plexus.glb', function ( gltf ) {
-
-							scene.add( gltf.scene );
+=
 
 							render();
 
@@ -449,7 +352,7 @@ const startButton2 = document.getElementById( 'startButton' );
 
 					} );
 
-				//
+			
 
 				const controls = new OrbitControls( camera, renderer.domElement );
 				controls.minDistance = 2;
