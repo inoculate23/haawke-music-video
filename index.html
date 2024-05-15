@@ -124,11 +124,7 @@ margin-bottom:10%;
 
 
 	import * as THREE from "three";
-import { tslFn, uniform, storageObject, instanceIndex, float, viewportTopLeft, color, vec3, cos, sin, mat3, storage, timerLocal, pass, rangeFog  } from 'three/nodes';
-			import { EffectComposer } from 'https://unpkg.com/three@0.164.1/examples/jsm/postprocessing/EffectComposer.js';
-			import { RenderPass } from 'https://unpkg.com/three@0.164.1/examples/jsm/postprocessing/RenderPass.js';
-			import { BloomPass } from 'https://unpkg.com/three@0.164.1/examples/jsm/postprocessing/BloomPass.js';
-			import { OutputPass } from 'https://unpkg.com/three@0.164.1/examples/jsm/postprocessing/OutputPass.js';
+
 
 
 			import { OrbitControls } from 'https://unpkg.com/three@0.164.1/examples/jsm/controls/OrbitControls.js';
@@ -136,8 +132,7 @@ import { tslFn, uniform, storageObject, instanceIndex, float, viewportTopLeft, c
 			import StorageBufferAttribute from 'https://unpkg.com/three@0.164.1/examples/jsm/renderers/common/StorageBufferAttribute.js';
 let video, texture, material, mesh;
 
-			let composer;
-
+		
 			let mouseX = 0;
 			let mouseY = 0;
 
@@ -265,46 +260,7 @@ let video, texture, material, mesh;
 				render();
 
 			}
-
-			//
-
-			function render() {
-
-				const time = Date.now() * 0.00005;
-
-				camera.position.x += ( mouseX - camera.position.x ) * 0.05;
-				camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
-
-				camera.lookAt( scene.position );
-
-				
-
-				// render scene pass ( the same of css )
-				const scenePass = pass( scene, camera );
-				const scenePassViewZ = scenePass.getViewZNode();
-
-				// background color
-				const backgroundColor = color( 0x0066ff );
-
-				// get fog factor from scene pass context
-				// equivalent to: scene.fog = new THREE.Fog( 0x0066ff, 2.7, 4 );
-				const fogFactor = rangeFog( null, 2.7, 4 ).context( { getViewZ: () => scenePassViewZ } );
-
-				// tone mapping scene pass
-				const scenePassTM = scenePass.toneMapping( THREE.ACESFilmicToneMapping );
-
-				// mix fog from fog factor and background color
-				const compose = fogFactor.mix( scenePassTM, backgroundColor );
-
-				postProcessing = new PostProcessing( renderer );
-				postProcessing.outputNode = compose;
-
-							render();
-
-						} 
-
-				
-			
+	    
 
 				const controls = new OrbitControls( camera, renderer.domElement );
 				controls.minDistance = 1;
@@ -315,9 +271,34 @@ let video, texture, material, mesh;
 
 				window.addEventListener( 'resize', onWindowResize );
 
+			//
+	    	function animate() {
+
+				requestAnimationFrame( animate );
+
+				render();
+
+			}
+
+
+			function render() {
+
+				const time = Date.now() * 0.00005;
+
+				camera.position.x += ( mouseX - camera.position.x ) * 0.05;
+				camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+
+				camera.lookAt( scene.position );
+
+			
+						
+
+						} 
+
+				
 			
 
-				postProcessing.renderAsync();
+			
 
 			
 				counter ++;
