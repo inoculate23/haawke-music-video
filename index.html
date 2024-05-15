@@ -113,7 +113,7 @@ document.body.append( renderer.domElement );
 				video.play();
 				video.addEventListener( 'play', function () {
 
-					this.currentTime = 3;
+					
 
 			
       const listener = new THREE.AudioListener();
@@ -133,6 +133,7 @@ audioLoader.load( 'j/music_box2.mp3', function( buffer ) {
 
 	
 console.log('sound');
+	this.currentTime = 3;
   	});
 })
 
