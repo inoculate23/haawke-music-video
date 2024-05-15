@@ -265,8 +265,8 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 				const container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.01, 30 );
-
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.05, 30 );
+                                camera.position.y = -4;
 
 				// nodes
 
@@ -310,8 +310,7 @@ import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, 
 				};
 
 			}
-const camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.1, 1000 );
-camera.position.y = -4;
+
 			function onWindowResize() {
 
 				camera.aspect = window.innerWidth / window.innerHeight;
