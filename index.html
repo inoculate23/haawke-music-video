@@ -81,15 +81,21 @@ margin-bottom:40%;
   </head>
   <body>
 
-
+  <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.164.1/three.module.js",
+                "OrbitControls": "https://unpkg.com/three@0.138.0/examples/jsm/controls/OrbitControls.js"
+            }
+        }
+    </script>
    	<div id="overlay">
 			<button id="startButton">Play</button>
 		</div>
-<script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.164.1/three.module.js" integrity="sha512-Q/3zf5GgHRJ3DlvRQmWOt4SHA8C1zceolMHljtRH3N8u1GESng1hVhgKixW8d6gHMaZChafNbHBS44V+oljh2Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="module">
 
 
-	import * as THREE from "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.164.1/three.module.js";
+	import * as THREE from "three";
 import { tslFn, uniform, storage, storageObject, instanceIndex, float, texture, viewportTopLeft, color } from '//unpkg.com/three@0.163.0/examples/jsm/nodes/Nodes.js';
 
 			import { GUI } from '//unpkg.com/three@0.163.0/examples/jsm/libs/lil-gui.module.min.js';
